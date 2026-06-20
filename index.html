@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reuni SMPN 1 Ungaran Angkatan 1998</title>
+
+<style>
+:root{
+    --primary:#0f172a;
+    --secondary:#1e40af;
+    --accent:#fbbf24;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#333;
+    --muted:#64748b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+/* CONTAINER */
+.container{
+    width:92%;
+    max-width:1100px;
+    margin:auto;
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    background:
+      linear-gradient(rgba(15,23,42,.85),rgba(15,23,42,.85)),
+      url("hero.png");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.4rem);
+    line-height:1.1;
+}
+
+.hero h2{
+    font-size:clamp(1.15rem, 2.4vw, 1.6rem);
+    margin:10px 0 20px;
+    font-weight:600;
+    letter-spacing:.3px;
+}
+
+.hero-info{
+    line-height:1.9;
+    margin-bottom:22px;
+    font-size:1.03rem;
+}
+
+/* BUTTON */
+.btn{
+    display:inline-block;
+    background:var(--accent);
+    color:#000;
+    text-decoration:none;
+    padding:14px 26px;
+    border-radius:50px;
+    font-weight:700;
+    transition:.25s ease;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 30px rgba(0,0,0,.18);
+}
+
+/* SECTION */
+section{
+    padding:60px 0;
+}
+
+.section-title{
+    text-align:center;
+    font-size:1.8rem;
+    margin-bottom:25px;
+    color:var(--primary);
+}
+
+/* CARD */
+.card{
+    background:var(--card);
+    padding:22px;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+/* INFO GRID */
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.info-card{
+    background:white;
+    padding:16px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.info-card h3{
+    font-size:1rem;
+    color:var(--secondary);
+    margin-bottom:5px;
+}
+
+/* COUNTDOWN */
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.count-box{
+    background:white;
+    text-align:center;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.count-box span{
+    font-size:2rem;
+    font-weight:bold;
+    color:var(--secondary);
+    display:block;
+}
+
+/* CONTACT */
+.contact a{
+    color:var(--secondary);
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* ===== GALERI BUBBLE STACK ===== */
+.gallery-section{
+    background:linear-gradient(180deg,#eef3fb 0%, #f7f9fd 100%);
+}
+
+.gallery-wrap{
+    position:relative;
+}
+
+.gallery-hint{
+    text-align:center;
+    color:var(--muted);
+    margin:-6px 0 24px;
+    font-size:.96rem;
+}
+
+/* area tumpukan */
+.gallery{
+    position:relative;
+    width:100%;
+    min-height:780px;
+    overflow:hidden;
+    border-radius:28px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,.85), rgba(255,255,255,.25) 40%, transparent 70%),
+      linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.25));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.55),
+      0 14px 40px rgba(15,23,42,.08);
+}
+
+/* bubble default */
+.photo{
+    position:absolute;
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    overflow:hidden;
+    cursor:grab;
+    user-select:none;
+    background:#dbe4f0;
+    box-shadow:
+      0 18px 40px rgba(0,0,0,.18),
+      0 0 0 8px rgba(255,255,255,.55);
+    transition:
+      transform .35s cubic-bezier(.2,.8,.2,1),
+      border-radius .35s cubic-bezier(.2,.8,.2,1),
+      width .35s cubic-bezier(.2,.8,.2,1),
+      height .35s cubic-bezier(.2,.8,.2,1),
+      box-shadow .35s cubic-bezier(.2,.8,.2,1),
+      opacity .35s ease,
+      filter .35s ease;
+    will-change:transform,left,top;
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    pointer-events:none;
+    transition:transform .35s ease;
+}
+
+/* hover saat masih bubble */
+.photo:hover{
+    transform:scale(1.08) rotate(0deg) !important;
+    z-index:999;
+    box-shadow:
+      0 26px 60px rgba(0,0,0,.22),
+      0 0 0 10px rgba(255,255,255,.7);
+}
+
+/* mode redup saat ada foto aktif */
+.gallery.has-active .photo:not(.active){
+    opacity:.35;
+    filter:blur(1px) saturate(.8);
+}
+
+/* FOTO AKTIF: portrait 2:3 */
+.photo.active{
+    width:min(68vw, 420px) !important;
+    height:min(84vh, 630px) !important;
+    border-radius:24px !important;
+    z-index:9999 !important;
+    cursor:default;
+    box-shadow:
+      0 34px 90px rgba(0,0,0,.32),
+      0 0 0 10px rgba(255,255,255,.8);
+    transform:translate(-50%, -50%) scale(1) rotate(0deg) !important;
+}
+
+.photo.active img{
+    transform:scale(1.01);
+}
+
+/* tombol tutup */
+.close-view{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:999px;
+    background:rgba(15,23,42,.78);
+    color:#fff;
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    display:none;
+    z-index:10000;
+    backdrop-filter:blur(6px);
+}
+
+.photo.active .close-view{
+    display:block;
+}
+
+/* overlay saat ada foto aktif */
+.gallery-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(15,23,42,.18);
+    backdrop-filter:blur(2px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+    z-index:1000;
+}
+
+.gallery.has-active .gallery-overlay{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* FOOTER */
+footer{
+    background:var(--primary);
+    color:white;
+    text-align:center;
+    padding:35px 15px;
+    font-size:0.95rem;
+}
+
+/* RESPONSIVE */
+@media (min-width:768px){
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .countdown{
+        grid-template-columns:repeat(4,1fr);
+    }
+}
+
+@media (max-width:900px){
+    .gallery{
+        min-height:700px;
+    }
+
+    .photo{
+        width:165px;
+        height:165px;
+    }
+
+    .photo.active{
+        width:min(74vw, 380px) !important;
+        height:min(78vh, 570px) !important;
+    }
+}
+
+@media (max-width:700px){
+    .photo{
+        width:140px;
+        height:140px;
+    }
+
+    .gallery{
+        min-height:620px;
+    }
+
+    .photo.active{
+        width:min(82vw, 320px) !important;
+        height:min(72vh, 480px) !important;
+        border-radius:20px !important;
+    }
+}
+
+@media (max-width:480px){
+    .hero-info{
+        font-size:.96rem;
+    }
+
+    .section-title{
+        font-size:1.5rem;
+    }
+
+    .gallery{
+        min-height:560px;
+        border-radius:22px;
+    }
+
+    .photo{
+        width:120px;
+        height:120px;
+    }
+
+    .photo.active{
+        width:min(88vw, 300px) !important;
+        height:min(70vh, 450px) !important;
+        border-radius:18px !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+
+<h1>TEMU KANGEN</h1>
+<h2>SMPN 1 UNGARAN ANGKATAN 1998</h2>
+
+<div class="hero-info">
+📅 Minggu, 12 Juli 2026<br>
+⏰ 10.30 WIB – Selesai<br>
+📍 C3 Hotel Ungaran<br>
+👔 Dresscode: Putih & Biru Tua<br>
+💰 Kontribusi: Rp100.000
+</div>
+
+<a class="btn" href="#daftar">Daftar & Konfirmasi</a>
+
+</div>
+</section>
+
+<!-- INFO ACARA -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Informasi Acara</h2>
+
+<div class="info-grid">
+
+<div class="info-card">
+<h3>Tanggal Pelaksanaan</h3>
+<p>Minggu, 12 Juli 2026</p>
+</div>
+
+<div class="info-card">
+<h3>Waktu</h3>
+<p>10.30 WIB – Selesai</p>
+</div>
+
+<div class="info-card">
+<h3>Lokasi</h3>
+<p>C3 Hotel</p>
+<p>Alamat: Jl. Diponegoro No.223, Genuk, Kec. Ungaran Barat, Kabupaten Semarang, Jawa Tengah 50512</p>
+</div>
+
+<div class="info-card">
+<h3>Dresscode</h3>
+<p>Putih & Biru Tua</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- TENTANG -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Tentang Reuni</h2>
+
+<div class="card">
+<p>
+28 tahun berlalu sejak kita lulus dari SMPN 1 Ungaran.
+Kini saatnya kembali berkumpul, mengenang masa sekolah,
+dan mempererat kembali persahabatan lama.
+</p>
+</div>
+
+</div>
+</section>
+
+<!-- GALERI FOTO -->
+<section class="gallery-section">
+  <div class="container">
+    <h2 class="section-title">Galeri Kenangan</h2>
+    <p class="gallery-hint">
+      Geser bubble foto untuk menyingkirkan tumpukan. Klik satu bubble untuk membuka foto penuh.
+    </p>
+
+    <div class="gallery-wrap">
+      <div class="gallery" id="gallery">
+        <div class="gallery-overlay" id="galleryOverlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Hitung Mundur</h2>
+
+<div class="countdown">
+
+<div class="count-box">
+<span id="days">0</span>
+Hari
+</div>
+
+<div class="count-box">
+<span id="hours">0</span>
+Jam
+</div>
+
+<div class="count-box">
+<span id="minutes">0</span>
+Menit
+</div>
+
+<div class="count-box">
+<span id="seconds">0</span>
+Detik
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- PEMBAYARAN -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Informasi Pembayaran</h2>
+
+<div class="card">
+<p><strong>Kontribusi:</strong> Rp100.000 / Orang</p>
+<br>
+<p>
+<strong>Bank BNI</strong><br>
+No Rekening: 1302106521<br>
+A/N Sri Retno Handayani
+</p>
+</div>
+
+</div>
+</section>
+
+<!-- PENDAFTARAN WA -->
+<section id="daftar">
+<div class="container">
+
+<h2 class="section-title">Pendaftaran & Konfirmasi</h2>
+
+<div class="card" style="text-align:center;">
+
+<p style="margin-bottom:15px; line-height:1.6;">
+<b>Pendaftaran hanya aktif setelah transfer dilakukan.</b><br><br>
+Silakan transfer kontribusi terlebih dahulu, kemudian kirim bukti pembayaran ke panitia berikut:
+</p>
+
+<a class="btn"
+href="https://wa.me/628112769886?text=Halo%20Bu%20Retno,%20saya%20sudah%20transfer%20kontribusi%20Reuni%20SMPN%201%20Ungaran%201998.%0ANama:%0AAlamat:%0ALampiran:%20(bukti%20transfer)"
+target="_blank">
+📲 Kirim Bukti Transfer ke Sri Retno Handayani
+</a>
+
+</div>
+
+</div>
+</section>
+
+<!-- CONTACT -->
+<section>
+<div class="container">
+
+<h2 class="section-title">Contact Person</h2>
+
+<div class="card contact">
+
+<p>📱 Loren :
+<a href="https://wa.me/6285601125951" target="_blank">085601125951</a></p>
+
+<p>📱 Era :
+<a href="https://wa.me/6285106170880" target="_blank">085106170880</a></p>
+
+<p>📱 Lutfi :
+<a href="https://wa.me/628562676463" target="_blank">08562676463</a></p>
+
+<p>📱 Joko :
+<a href="https://wa.me/6281568331984" target="_blank">081568331984</a></p>
+
+</div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p><b>TEMU KANGEN SMPN 1 UNGARAN ANGKATAN 1998</b></p>
+<p>"28 Tahun Persahabatan, Saatnya Kembali Bersama"</p>
+</footer>
+
+<script src="gallery.js"></script>
+
+<script>
+/* =========================
+   COUNTDOWN
+========================= */
+const targetDate = new Date("2026-07-12T10:30:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+        document.getElementById("days").textContent = 0;
+        document.getElementById("hours").textContent = 0;
+        document.getElementById("minutes").textContent = 0;
+        document.getElementById("seconds").textContent = 0;
+        return;
+    }
+
+    document.getElementById("days").textContent =
+        Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    document.getElementById("hours").textContent =
+        Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    document.getElementById("minutes").textContent =
+        Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("seconds").textContent =
+        Math.floor((distance % (1000 * 60)) / 1000);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* =========================
+   BUBBLE STACK GALLERY
+========================= */
+const gallery = document.getElementById("gallery");
+const overlay = document.getElementById("galleryOverlay");
+
+let zCounter = 10;
+let activeCard = null;
+
+function clamp(num, min, max){
+    return Math.max(min, Math.min(num, max));
+}
+
+function bringToFront(card){
+    zCounter++;
+    card.style.zIndex = zCounter;
+}
+
+function closeActiveCard() {
+    if (!activeCard) return;
+
+    activeCard.classList.remove("active");
+    activeCard.style.left = activeCard.dataset.left;
+    activeCard.style.top = activeCard.dataset.top;
+    activeCard.style.transform = activeCard.dataset.transform;
+
+    gallery.classList.remove("has-active");
+    activeCard = null;
+}
+
+if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
+    const getBubbleSize = () => {
+        if (window.innerWidth <= 480) return 120;
+        if (window.innerWidth <= 700) return 140;
+        if (window.innerWidth <= 900) return 165;
+        return 190;
+    };
+
+    galleryImages.forEach((fileName, index) => {
+        const card = document.createElement("article");
+        card.className = "photo";
+
+        const img = document.createElement("img");
+        img.src = `images/${fileName}`;
+        img.alt = `Galeri reuni ${index + 1}`;
+        img.loading = "lazy";
+
+        const closeBtn = document.createElement("button");
+        closeBtn.className = "close-view";
+        closeBtn.type = "button";
+        closeBtn.setAttribute("aria-label", "Tutup foto");
+        closeBtn.innerHTML = "&times;";
+
+        card.appendChild(img);
+        card.appendChild(closeBtn);
+        gallery.appendChild(card);
+
+        const size = getBubbleSize();
+        const maxX = Math.max(0, gallery.clientWidth - size - 20);
+        const maxY = Math.max(0, gallery.clientHeight - size - 20);
+
+        const x = 10 + Math.random() * maxX;
+        const y = 10 + Math.random() * maxY;
+        const rot = (Math.random() * 28 - 14).toFixed(2);
+
+        card.dataset.left = `${x}px`;
+        card.dataset.top = `${y}px`;
+        card.dataset.transform = `rotate(${rot}deg)`;
+        card.dataset.dragged = "false";
+
+        card.style.left = card.dataset.left;
+        card.style.top = card.dataset.top;
+        card.style.transform = card.dataset.transform;
+        card.style.zIndex = index + 1;
+
+        // klik bubble -> buka penuh
+        card.addEventListener("click", (e) => {
+            if (e.target === closeBtn) return;
+
+            // abaikan jika klik setelah drag
+            if (card.dataset.dragged === "true") {
+                card.dataset.dragged = "false";
+                return;
+            }
+
+            if (activeCard === card) return;
+
+            closeActiveCard();
+            activeCard = card;
+            gallery.classList.add("has-active");
+            bringToFront(card);
+
+            const centerX = gallery.clientWidth / 2;
+            const centerY = gallery.clientHeight / 2;
+
+            card.classList.add("active");
+            card.style.left = `${centerX}px`;
+            card.style.top = `${centerY}px`;
+        });
+
+        closeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeActiveCard();
+        });
+
+        /* ===== DRAG SUPPORT ===== */
+        let isDown = false;
+        let moved = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        const onPointerMove = (clientX, clientY) => {
+            if (!isDown || card.classList.contains("active")) return;
+
+            moved = true;
+            card.dataset.dragged = "true";
+
+            const galleryBox = gallery.getBoundingClientRect();
+            let newLeft = clientX - galleryBox.left - offsetX;
+            let newTop = clientY - galleryBox.top - offsetY;
+
+            const currentSize = card.offsetWidth;
+
+            newLeft = clamp(newLeft, -currentSize * 0.2, gallery.clientWidth - currentSize * 0.8);
+            newTop = clamp(newTop, -currentSize * 0.2, gallery.clientHeight - currentSize * 0.8);
+
+            card.style.left = `${newLeft}px`;
+            card.style.top = `${newTop}px`;
+
+            card.dataset.left = `${newLeft}px`;
+            card.dataset.top = `${newTop}px`;
+        };
+
+        card.addEventListener("mousedown", (e) => {
+            if (card.classList.contains("active")) return;
+
+            isDown = true;
+            moved = false;
+            bringToFront(card);
+
+            const rect = card.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+
+            card.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            onPointerMove(e.clientX, e.clientY);
+        });
+
+        document.addEventListener("mouseup", () => {
+            if (!isDown) return;
+            isDown = false;
+            card.style.cursor = "grab";
+
+            setTimeout(() => {
+                if (!moved) card.dataset.dragged = "false";
+            }, 20);
+        });
+
+        /* ===== TOUCH SUPPORT ===== */
+        card.addEventListener("touchstart", (e) => {
+            if (card.classList.contains("active")) return;
+
+            const touch = e.touches[0];
+            isDown = true;
+            moved = false;
+            bringToFront(card);
+
+            const rect = card.getBoundingClientRect();
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
+        }, { passive:true });
+
+        document.addEventListener("touchmove", (e) => {
+            if (!isDown) return;
+            const touch = e.touches[0];
+            onPointerMove(touch.clientX, touch.clientY);
+        }, { passive:true });
+
+        document.addEventListener("touchend", () => {
+            if (!isDown) return;
+            isDown = false;
+
+            setTimeout(() => {
+                if (!moved) card.dataset.dragged = "false";
+            }, 20);
+        });
+    });
+}
+
+/* tutup saat klik overlay / tekan Esc */
+overlay.addEventListener("click", closeActiveCard);
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeActiveCard();
+    }
+});
+</script>
+
+</body>
+</html>
