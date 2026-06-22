@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -45,7 +46,7 @@ body{
     min-height:100vh;
     background:
       linear-gradient(rgba(15,23,42,.85),rgba(15,23,42,.85)),
-      url("hero.png");
+      url("hero.webp");
     background-size:cover;
     background-position:center;
     display:flex;
@@ -206,7 +207,7 @@ section{
       0 18px 40px rgba(0,0,0,.18),
       0 0 0 8px rgba(255,255,255,.55);
     transition:
-      transform .35s cubic-bezier(.2,.8,.2,1),
+      transform .6s cubic-bezier(.2,.8,.2,1),
       border-radius .35s cubic-bezier(.2,.8,.2,1),
       width .35s cubic-bezier(.2,.8,.2,1),
       height .35s cubic-bezier(.2,.8,.2,1),
@@ -225,9 +226,24 @@ section{
     transition:transform .35s ease;
 }
 
+/* animasi gerak pelan bubble */
+@keyframes bubbleFloat {
+    0%   { transform: translate3d(0px, 0px, 0) rotate(var(--rot, 0deg)); }
+    25%  { transform: translate3d(4px, -6px, 0) rotate(var(--rot, 0deg)); }
+    50%  { transform: translate3d(-3px, -10px, 0) rotate(var(--rot, 0deg)); }
+    75%  { transform: translate3d(-6px, -4px, 0) rotate(var(--rot, 0deg)); }
+    100% { transform: translate3d(0px, 0px, 0) rotate(var(--rot, 0deg)); }
+}
+
+.photo.floating{
+    animation: bubbleFloat var(--floatDur, 12s) ease-in-out infinite;
+    animation-delay: var(--floatDelay, 0s);
+}
+
 /* hover saat masih bubble */
 .photo:hover{
-    transform:scale(1.08) rotate(0deg) !important;
+    animation-play-state:paused;
+    transform:scale(1.08) rotate(var(--rot, 0deg)) !important;
     z-index:999;
     box-shadow:
       0 26px 60px rgba(0,0,0,.22),
@@ -247,6 +263,7 @@ section{
     border-radius:24px !important;
     z-index:9999 !important;
     cursor:default;
+    animation:none !important;
     box-shadow:
       0 34px 90px rgba(0,0,0,.32),
       0 0 0 10px rgba(255,255,255,.8);
@@ -389,9 +406,9 @@ footer{
 
 <div class="hero-info">
 📅 Minggu, 12 Juli 2026<br>
-⏰ 09.30 WIB – Selesai<br>
+⏰ 10.30 WIB – Selesai<br>
 📍 C3 Hotel Ungaran<br>
-👔 Dresscode: Putih & Biru Navy<br>
+👔 Dresscode: Putih & Biru Tua<br>
 💰 Kontribusi: Rp100.000
 </div>
 
@@ -415,7 +432,7 @@ footer{
 
 <div class="info-card">
 <h3>Waktu</h3>
-<p>09.30 WIB – Selesai</p>
+<p>10.30 WIB – Selesai</p>
 </div>
 
 <div class="info-card">
@@ -426,7 +443,7 @@ footer{
 
 <div class="info-card">
 <h3>Dresscode</h3>
-<p>Putih & Biru Navy</p>
+<p>Putih & Biru Tua</p>
 </div>
 
 </div>
@@ -634,7 +651,8 @@ function closeActiveCard() {
     activeCard.classList.remove("active");
     activeCard.style.left = activeCard.dataset.left;
     activeCard.style.top = activeCard.dataset.top;
-    activeCard.style.transform = activeCard.dataset.transform;
+    activeCard.style.transform = "";
+    activeCard.classList.add("floating");
 
     gallery.classList.remove("has-active");
     activeCard = null;
@@ -675,6 +693,10 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         const y = 10 + Math.random() * maxY;
         const rot = (Math.random() * 28 - 14).toFixed(2);
 
+        /* animasi tiap bubble beda-beda */
+        const floatDur = (10 + Math.random() * 6).toFixed(2);
+        const floatDelay = (Math.random() * 4).toFixed(2);
+
         card.dataset.left = `${x}px`;
         card.dataset.top = `${y}px`;
         card.dataset.transform = `rotate(${rot}deg)`;
@@ -682,8 +704,13 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
 
         card.style.left = card.dataset.left;
         card.style.top = card.dataset.top;
-        card.style.transform = card.dataset.transform;
         card.style.zIndex = index + 1;
+
+        /* CSS variable untuk animasi */
+        card.style.setProperty("--rot", `${rot}deg`);
+        card.style.setProperty("--floatDur", `${floatDur}s`);
+        card.style.setProperty("--floatDelay", `${floatDelay}s`);
+        card.classList.add("floating");
 
         // klik bubble -> buka penuh
         card.addEventListener("click", (e) => {
@@ -705,6 +732,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
             const centerX = gallery.clientWidth / 2;
             const centerY = gallery.clientHeight / 2;
 
+            card.classList.remove("floating");
             card.classList.add("active");
             card.style.left = `${centerX}px`;
             card.style.top = `${centerY}px`;
@@ -814,3 +842,4 @@ document.addEventListener("keydown", (e) => {
 
 </body>
 </html>
+```
