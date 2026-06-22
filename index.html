@@ -215,7 +215,7 @@ section{
       0 18px 40px rgba(0,0,0,.18),
       0 0 0 8px rgba(255,255,255,.55);
     transition:
-      transform .6s cubic-bezier(.2,.8,.2,1),
+      transform .35s cubic-bezier(.2,.8,.2,1),
       border-radius .35s cubic-bezier(.2,.8,.2,1),
       width .35s cubic-bezier(.2,.8,.2,1),
       height .35s cubic-bezier(.2,.8,.2,1),
@@ -255,7 +255,6 @@ section{
 .photo:hover{
     animation-play-state:paused;
     transform:scale(1.08) rotate(var(--rot, 0deg)) !important;
-    z-index:999;
     box-shadow:
       0 26px 60px rgba(0,0,0,.22),
       0 0 0 10px rgba(255,255,255,.7);
@@ -267,14 +266,18 @@ section{
     filter:blur(1px) saturate(.8);
 }
 
-/* FOTO AKTIF: portrait 2:3 */
+/* FOTO AKTIF: mengikuti rasio asli gambar */
 .photo.active{
-    width:min(68vw, 420px) !important;
-    height:min(84vh, 630px) !important;
-    border-radius:24px !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:min(88vw, 900px) !important;
+    max-height:84vh !important;
+    aspect-ratio:auto !important;
+    border-radius:20px !important;
     z-index:9999 !important;
     cursor:default;
     animation:none !important;
+    overflow:hidden;
     box-shadow:
       0 34px 90px rgba(0,0,0,.32),
       0 0 0 10px rgba(255,255,255,.8);
@@ -282,7 +285,11 @@ section{
 }
 
 .photo.active img{
-    transform:scale(1.01);
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    transform:none !important;
 }
 
 /* tombol tutup */
@@ -354,11 +361,6 @@ footer{
         width:165px;
         height:165px;
     }
-
-    .photo.active{
-        width:min(74vw, 380px) !important;
-        height:min(78vh, 570px) !important;
-    }
 }
 
 @media (max-width:700px){
@@ -369,12 +371,6 @@ footer{
 
     .gallery{
         min-height:620px;
-    }
-
-    .photo.active{
-        width:min(82vw, 320px) !important;
-        height:min(72vh, 480px) !important;
-        border-radius:20px !important;
     }
 }
 
@@ -398,8 +394,8 @@ footer{
     }
 
     .photo.active{
-        width:min(88vw, 300px) !important;
-        height:min(70vh, 450px) !important;
+        max-width:92vw !important;
+        max-height:72vh !important;
         border-radius:18px !important;
     }
 }
@@ -484,7 +480,7 @@ dan mempererat kembali persahabatan lama.
   <div class="container">
     <h2 class="section-title">Galeri Kenangan</h2>
     <p class="gallery-hint">
-      Geser bubble foto untuk menyingkirkan tumpukan. Klik satu bubble untuk membuka foto penuh.
+      Geser bubble foto untuk menyingkirkan tumpukan. Arahkan mouse ke bubble agar naik ke atas, lalu klik untuk membuka foto penuh.
     </p>
 
     <div class="gallery-wrap">
@@ -660,6 +656,8 @@ function closeActiveCard() {
     if (!activeCard) return;
 
     activeCard.classList.remove("active");
+    activeCard.style.width = "";
+    activeCard.style.height = "";
     activeCard.style.left = activeCard.dataset.left;
     activeCard.style.top = activeCard.dataset.top;
     activeCard.style.transform = "";
@@ -723,7 +721,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         card.style.setProperty("--floatDelay", `${floatDelay}s`);
         card.classList.add("floating");
 
-        // klik bubble -> buka penuh
+        // klik bubble -> buka penuh dengan rasio asli gambar
         card.addEventListener("click", (e) => {
             if (e.target === closeBtn) return;
 
@@ -744,8 +742,27 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
 
             card.classList.remove("floating");
             card.classList.add("active");
+
+            const naturalW = img.naturalWidth || 800;
+            const naturalH = img.naturalHeight || 1200;
+            const ratio = naturalW / naturalH;
+
+            const maxW = Math.min(window.innerWidth * 0.88, 900);
+            const maxH = window.innerHeight * 0.84;
+
+            let finalW = maxW;
+            let finalH = finalW / ratio;
+
+            if (finalH > maxH) {
+                finalH = maxH;
+                finalW = finalH * ratio;
+            }
+
+            card.style.width = `${finalW}px`;
+            card.style.height = `${finalH}px`;
             card.style.left = `${centerX}px`;
             card.style.top = `${centerY}px`;
+
             document.body.style.overflow = "hidden";
         });
 
@@ -753,12 +770,12 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
             e.stopPropagation();
             closeActiveCard();
         });
-		
-		/* ===== HOVER DESKTOP: bubble langsung naik ke atas tumpukan ===== */
-		card.addEventListener("mouseenter", () => {
-		if (card.classList.contains("active")) return;
-		bringToFront(card);
-		});
+
+        /* hover desktop -> bubble langsung naik ke atas tumpukan */
+        card.addEventListener("mouseenter", () => {
+            if (card.classList.contains("active")) return;
+            bringToFront(card);
+        });
 
         /* ===== DRAG SUPPORT ===== */
         let isDown = false;
