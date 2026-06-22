@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -31,6 +32,12 @@ body{
     background:var(--bg);
     color:var(--text);
     overflow-x:hidden;
+}
+
+/* saat lightbox terbuka */
+body.no-scroll{
+    overflow:hidden;
+    touch-action:none;
 }
 
 /* CONTAINER */
@@ -216,9 +223,6 @@ section{
       0 0 0 8px rgba(255,255,255,.55);
     transition:
       transform .35s cubic-bezier(.2,.8,.2,1),
-      border-radius .35s cubic-bezier(.2,.8,.2,1),
-      width .35s cubic-bezier(.2,.8,.2,1),
-      height .35s cubic-bezier(.2,.8,.2,1),
       box-shadow .35s cubic-bezier(.2,.8,.2,1),
       opacity .35s ease,
       filter .35s ease;
@@ -237,7 +241,7 @@ section{
     transition:transform .35s ease;
 }
 
-/* animasi gerak pelan bubble */
+/* animasi bubble floating */
 @keyframes bubbleFloat {
     0%   { transform: translate3d(0px, 0px, 0) rotate(var(--rot, 0deg)); }
     25%  { transform: translate3d(4px, -6px, 0) rotate(var(--rot, 0deg)); }
@@ -251,7 +255,7 @@ section{
     animation-delay: var(--floatDelay, 0s);
 }
 
-/* hover saat masih bubble */
+/* hover bubble */
 .photo:hover{
     animation-play-state:paused;
     transform:scale(1.08) rotate(var(--rot, 0deg)) !important;
@@ -260,76 +264,82 @@ section{
       0 0 0 10px rgba(255,255,255,.7);
 }
 
-/* mode redup saat ada foto aktif */
-.gallery.has-active .photo:not(.active){
-    opacity:.35;
-    filter:blur(1px) saturate(.8);
-}
-
-/* FOTO AKTIF: mengikuti rasio asli gambar */
-.photo.active{
-    width:auto !important;
-    height:auto !important;
-    max-width:min(88vw, 900px) !important;
-    max-height:84vh !important;
-    aspect-ratio:auto !important;
-    border-radius:20px !important;
-    z-index:9999 !important;
-    cursor:default;
-    animation:none !important;
-    overflow:hidden;
+/* bubble yang sedang dipilih */
+.photo.selected{
+    z-index:9998 !important;
     box-shadow:
-      0 34px 90px rgba(0,0,0,.32),
-      0 0 0 10px rgba(255,255,255,.8);
-    transform:translate(-50%, -50%) scale(1) rotate(0deg) !important;
+      0 30px 70px rgba(0,0,0,.24),
+      0 0 0 10px rgba(255,255,255,.9);
+    transform:scale(1.04) rotate(var(--rot, 0deg)) !important;
 }
 
-.photo.active img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
-    transform:none !important;
+/* redup saat lightbox aktif */
+.gallery.has-active .photo:not(.selected){
+    opacity:.28;
+    filter:blur(1px) saturate(.75);
 }
 
-/* tombol tutup */
-.close-view{
-    position:absolute;
-    top:12px;
-    right:12px;
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:999px;
-    background:rgba(15,23,42,.78);
-    color:#fff;
-    font-size:20px;
-    line-height:1;
-    cursor:pointer;
-    display:none;
-    z-index:10000;
-    backdrop-filter:blur(6px);
-}
-
-.photo.active .close-view{
-    display:block;
-}
-
-/* overlay saat ada foto aktif */
-.gallery-overlay{
-    position:absolute;
+/* LIGHTBOX FULLSCREEN */
+.lightbox{
+    position:fixed;
     inset:0;
-    background:rgba(15,23,42,.18);
-    backdrop-filter:blur(2px);
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(8,15,32,.82);
+    backdrop-filter:blur(8px);
     opacity:0;
     pointer-events:none;
     transition:opacity .3s ease;
-    z-index:1000;
 }
 
-.gallery.has-active .gallery-overlay{
+.lightbox.show{
     opacity:1;
     pointer-events:auto;
+}
+
+.lightbox-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.lightbox img{
+    display:block;
+    max-width:min(92vw, 1200px);
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:18px;
+    box-shadow:
+      0 30px 90px rgba(0,0,0,.42),
+      0 0 0 10px rgba(255,255,255,.08);
+    background:#111827;
+}
+
+/* tombol close lightbox */
+.lightbox-close{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:46px;
+    height:46px;
+    border:none;
+    border-radius:999px;
+    background:rgba(15,23,42,.82);
+    color:#fff;
+    font-size:24px;
+    line-height:1;
+    cursor:pointer;
+    z-index:2;
+    backdrop-filter:blur(8px);
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
 }
 
 /* FOOTER */
@@ -393,10 +403,22 @@ footer{
         height:120px;
     }
 
-    .photo.active{
-        max-width:92vw !important;
-        max-height:72vh !important;
-        border-radius:18px !important;
+    .lightbox{
+        padding:14px;
+    }
+
+    .lightbox img{
+        max-width:96vw;
+        max-height:88vh;
+        border-radius:14px;
+    }
+
+    .lightbox-close{
+        top:10px;
+        right:10px;
+        width:42px;
+        height:42px;
+        font-size:22px;
     }
 }
 </style>
@@ -480,13 +502,11 @@ dan mempererat kembali persahabatan lama.
   <div class="container">
     <h2 class="section-title">Galeri Kenangan</h2>
     <p class="gallery-hint">
-      Geser bubble foto untuk menyingkirkan tumpukan. Arahkan mouse ke bubble agar naik ke atas, lalu klik untuk membuka foto penuh.
+      Geser bubble foto untuk menyingkirkan tumpukan. Arahkan mouse ke bubble agar naik ke atas, lalu klik untuk membuka foto fullscreen.
     </p>
 
     <div class="gallery-wrap">
-      <div class="gallery" id="gallery">
-        <div class="gallery-overlay" id="galleryOverlay"></div>
-      </div>
+      <div class="gallery" id="gallery"></div>
     </div>
   </div>
 </section>
@@ -598,6 +618,14 @@ target="_blank">
 <p>"28 Tahun Persahabatan, Saatnya Kembali Bersama"</p>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Tutup foto">&times;</button>
+        <img id="lightboxImg" src="" alt="Foto galeri" />
+    </div>
+</div>
+
 <script src="gallery.js"></script>
 
 <script>
@@ -635,10 +663,12 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* =========================
-   BUBBLE STACK GALLERY
+   BUBBLE STACK GALLERY + FULLSCREEN LIGHTBOX
 ========================= */
 const gallery = document.getElementById("gallery");
-const overlay = document.getElementById("galleryOverlay");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
 
 let zCounter = 10;
 let activeCard = null;
@@ -652,19 +682,31 @@ function bringToFront(card){
     card.style.zIndex = zCounter;
 }
 
-function closeActiveCard() {
-    if (!activeCard) return;
+function openLightbox(card, imgSrc, imgAlt){
+    closeLightbox();
 
-    activeCard.classList.remove("active");
-    activeCard.style.width = "";
-    activeCard.style.height = "";
-    activeCard.style.left = activeCard.dataset.left;
-    activeCard.style.top = activeCard.dataset.top;
-    activeCard.style.transform = "";
-    activeCard.classList.add("floating");
+    activeCard = card;
+    gallery.classList.add("has-active");
+    card.classList.add("selected");
+    bringToFront(card);
+
+    lightboxImg.src = imgSrc;
+    lightboxImg.alt = imgAlt || "Foto galeri";
+    lightbox.classList.add("show");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+}
+
+function closeLightbox(){
+    if (activeCard){
+        activeCard.classList.remove("selected");
+    }
 
     gallery.classList.remove("has-active");
-    document.body.style.overflow = "";
+    lightbox.classList.remove("show");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.src = "";
+    document.body.classList.remove("no-scroll");
     activeCard = null;
 }
 
@@ -686,14 +728,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         img.loading = "lazy";
         img.draggable = false;
 
-        const closeBtn = document.createElement("button");
-        closeBtn.className = "close-view";
-        closeBtn.type = "button";
-        closeBtn.setAttribute("aria-label", "Tutup foto");
-        closeBtn.innerHTML = "&times;";
-
         card.appendChild(img);
-        card.appendChild(closeBtn);
         gallery.appendChild(card);
 
         const size = getBubbleSize();
@@ -709,7 +744,6 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
 
         card.dataset.left = `${x}px`;
         card.dataset.top = `${y}px`;
-        card.dataset.transform = `rotate(${rot}deg)`;
         card.dataset.dragged = "false";
 
         card.style.left = card.dataset.left;
@@ -721,59 +755,19 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         card.style.setProperty("--floatDelay", `${floatDelay}s`);
         card.classList.add("floating");
 
-        // klik bubble -> buka penuh dengan rasio asli gambar
-        card.addEventListener("click", (e) => {
-            if (e.target === closeBtn) return;
-
+        /* klik bubble -> buka fullscreen lightbox */
+        card.addEventListener("click", () => {
             if (card.dataset.dragged === "true") {
                 card.dataset.dragged = "false";
                 return;
             }
 
-            if (activeCard === card) return;
-
-            closeActiveCard();
-            activeCard = card;
-            gallery.classList.add("has-active");
-            bringToFront(card);
-
-            const centerX = gallery.clientWidth / 2;
-            const centerY = gallery.clientHeight / 2;
-
-            card.classList.remove("floating");
-            card.classList.add("active");
-
-            const naturalW = img.naturalWidth || 800;
-            const naturalH = img.naturalHeight || 1200;
-            const ratio = naturalW / naturalH;
-
-            const maxW = Math.min(window.innerWidth * 0.88, 900);
-            const maxH = window.innerHeight * 0.84;
-
-            let finalW = maxW;
-            let finalH = finalW / ratio;
-
-            if (finalH > maxH) {
-                finalH = maxH;
-                finalW = finalH * ratio;
-            }
-
-            card.style.width = `${finalW}px`;
-            card.style.height = `${finalH}px`;
-            card.style.left = `${centerX}px`;
-            card.style.top = `${centerY}px`;
-
-            document.body.style.overflow = "hidden";
-        });
-
-        closeBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            closeActiveCard();
+            openLightbox(card, img.src, img.alt);
         });
 
         /* hover desktop -> bubble langsung naik ke atas tumpukan */
         card.addEventListener("mouseenter", () => {
-            if (card.classList.contains("active")) return;
+            if (card.classList.contains("selected")) return;
             bringToFront(card);
         });
 
@@ -784,7 +778,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         let offsetY = 0;
 
         const onPointerMove = (clientX, clientY) => {
-            if (!isDown || card.classList.contains("active")) return;
+            if (!isDown || card.classList.contains("selected")) return;
 
             moved = true;
             card.dataset.dragged = "true";
@@ -806,7 +800,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         };
 
         card.addEventListener("mousedown", (e) => {
-            if (card.classList.contains("active")) return;
+            if (card.classList.contains("selected")) return;
 
             isDown = true;
             moved = false;
@@ -835,7 +829,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
 
         /* ===== TOUCH SUPPORT (ANTI GESER HALAMAN HP) ===== */
         card.addEventListener("touchstart", (e) => {
-            if (card.classList.contains("active")) return;
+            if (card.classList.contains("selected")) return;
 
             const touch = e.touches[0];
             isDown = true;
@@ -869,12 +863,18 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
     });
 }
 
-/* tutup saat klik overlay / tekan Esc */
-overlay.addEventListener("click", closeActiveCard);
+/* tutup lightbox */
+lightboxClose.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox || e.target === lightboxImg.parentElement) {
+        closeLightbox();
+    }
+});
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-        closeActiveCard();
+        closeLightbox();
     }
 });
 </script>
