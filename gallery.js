@@ -1,6 +1,6 @@
 const galleryImages = [
-  "a.jpg",
-  "b.jpg",
+  "a.webp",
+  "b.webp",
   "foto1.webp",
   "foto2.webp",
   "foto3.webp",
