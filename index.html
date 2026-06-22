@@ -185,6 +185,11 @@ section{
     min-height:780px;
     overflow:hidden;
     border-radius:28px;
+    touch-action:none;
+    overscroll-behavior:contain;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
     background:
       radial-gradient(circle at 20% 20%, rgba(255,255,255,.85), rgba(255,255,255,.25) 40%, transparent 70%),
       linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.25));
@@ -202,6 +207,10 @@ section{
     overflow:hidden;
     cursor:grab;
     user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+    -webkit-user-drag:none;
+    -webkit-touch-callout:none;
     background:#dbe4f0;
     box-shadow:
       0 18px 40px rgba(0,0,0,.18),
@@ -223,6 +232,9 @@ section{
     object-fit:cover;
     display:block;
     pointer-events:none;
+    -webkit-user-drag:none;
+    user-select:none;
+    -webkit-user-select:none;
     transition:transform .35s ease;
 }
 
@@ -655,6 +667,7 @@ function closeActiveCard() {
     activeCard.classList.add("floating");
 
     gallery.classList.remove("has-active");
+    document.body.style.overflow = "";
     activeCard = null;
 }
 
@@ -674,6 +687,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         img.src = `images/${fileName}`;
         img.alt = `Galeri reuni ${index + 1}`;
         img.loading = "lazy";
+        img.draggable = false;
 
         const closeBtn = document.createElement("button");
         closeBtn.className = "close-view";
@@ -693,7 +707,6 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         const y = 10 + Math.random() * maxY;
         const rot = (Math.random() * 28 - 14).toFixed(2);
 
-        /* animasi tiap bubble beda-beda */
         const floatDur = (10 + Math.random() * 6).toFixed(2);
         const floatDelay = (Math.random() * 4).toFixed(2);
 
@@ -706,7 +719,6 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         card.style.top = card.dataset.top;
         card.style.zIndex = index + 1;
 
-        /* CSS variable untuk animasi */
         card.style.setProperty("--rot", `${rot}deg`);
         card.style.setProperty("--floatDur", `${floatDur}s`);
         card.style.setProperty("--floatDelay", `${floatDelay}s`);
@@ -716,7 +728,6 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
         card.addEventListener("click", (e) => {
             if (e.target === closeBtn) return;
 
-            // abaikan jika klik setelah drag
             if (card.dataset.dragged === "true") {
                 card.dataset.dragged = "false";
                 return;
@@ -736,12 +747,19 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
             card.classList.add("active");
             card.style.left = `${centerX}px`;
             card.style.top = `${centerY}px`;
+            document.body.style.overflow = "hidden";
         });
 
         closeBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             closeActiveCard();
         });
+		
+		/* ===== HOVER DESKTOP: bubble langsung naik ke atas tumpukan ===== */
+		card.addEventListener("mouseenter", () => {
+		if (card.classList.contains("active")) return;
+		bringToFront(card);
+		});
 
         /* ===== DRAG SUPPORT ===== */
         let isDown = false;
@@ -799,7 +817,7 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
             }, 20);
         });
 
-        /* ===== TOUCH SUPPORT ===== */
+        /* ===== TOUCH SUPPORT (ANTI GESER HALAMAN HP) ===== */
         card.addEventListener("touchstart", (e) => {
             if (card.classList.contains("active")) return;
 
@@ -811,13 +829,18 @@ if (typeof galleryImages !== "undefined" && Array.isArray(galleryImages)) {
             const rect = card.getBoundingClientRect();
             offsetX = touch.clientX - rect.left;
             offsetY = touch.clientY - rect.top;
-        }, { passive:true });
+
+            e.preventDefault();
+        }, { passive:false });
 
         document.addEventListener("touchmove", (e) => {
             if (!isDown) return;
+
             const touch = e.touches[0];
             onPointerMove(touch.clientX, touch.clientY);
-        }, { passive:true });
+
+            e.preventDefault();
+        }, { passive:false });
 
         document.addEventListener("touchend", () => {
             if (!isDown) return;
