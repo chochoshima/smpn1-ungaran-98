@@ -4,7 +4,7 @@ const FILES = [
     "/",
     "/index.html",
     "/style.css",
-    "/gallery.js",
+    "/app.js",
     "/manifest.webmanifest"
 ];
 
