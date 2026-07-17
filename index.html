@@ -2,21 +2,39 @@
 <html lang="id">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPENSA 98 | Galeri Reuni</title>
 
-<title>SPENSA 98 | Galeri Reuni</title>
+    <meta name="description" content="Galeri Reuni Alumni SMP Negeri 1 Ungaran Angkatan 1998">
+    <meta name="theme-color" content="#0b3d91">
 
-<meta name="description" content="Galeri Reuni Alumni SMPN 1 Ungaran Angkatan 1998">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SPENSA 98">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Icons -->
+    <link rel="icon" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Open Graph -->
+    <meta property="og:title" content="SPENSA 98 | Galeri Reuni">
+    <meta property="og:description" content="Galeri Reuni Alumni SMP Negeri 1 Ungaran Angkatan 1998">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/icon-512.png">
 
-<link rel="stylesheet" href="style.css">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -24,103 +42,78 @@
 <header class="header">
 
     <div class="brand">
-
-        <img src="logo.png" alt="SPENSA 98" class="logo">
+        <img src="logo.png" alt="Logo SPENSA 98" class="logo">
 
         <div>
-
             <h1>SPENSA 98</h1>
-
             <p>Galeri Reuni Alumni SMP Negeri 1 Ungaran Angkatan 1998</p>
-
         </div>
-
     </div>
 
     <div class="photo-count">
-
         <span id="photoCount">0</span>
-
         <small>Foto</small>
-
     </div>
 
 </header>
 
 <div class="loading" id="loading">
-
     <div class="spinner"></div>
-
     <p>Memuat galeri...</p>
-
 </div>
 
 <div class="empty-state" id="emptyState">
-
-📷
-
-<h2>Belum ada foto</h2>
-
-<p>Galeri masih kosong.</p>
-
+    📷
+    <h2>Belum ada foto</h2>
+    <p>Galeri masih kosong.</p>
 </div>
 
 <main>
-
-<div class="gallery" id="gallery"></div>
-
+    <div class="gallery" id="gallery"></div>
 </main>
 
 <div class="viewer" id="viewer">
 
-<button class="close-btn" id="closeViewer">✕</button>
+    <button class="close-btn" id="closeViewer" aria-label="Tutup">✕</button>
 
-<button class="nav prev" id="prevPhoto">❮</button>
+    <button class="nav prev" id="prevPhoto" aria-label="Foto sebelumnya">❮</button>
 
-<div class="viewer-content">
+    <div class="viewer-content">
+        <img id="viewerImage" src="" alt="">
+        <div class="caption" id="caption"></div>
+    </div>
 
-<img id="viewerImage" src="" alt="">
-
-<div class="caption" id="caption"></div>
-
-</div>
-
-<button class="nav next" id="nextPhoto">❯</button>
+    <button class="nav next" id="nextPhoto" aria-label="Foto berikutnya">❯</button>
 
 </div>
 
-<button class="top-button" id="topButton">
-
-↑
-
+<button class="top-button" id="topButton" aria-label="Kembali ke atas">
+    ↑
 </button>
 
 <footer>
-
-<div class="footer-inner">
-
-<p><strong>SPENSA 98</strong></p>
-
-<p>Alumni SMP Negeri 1 Ungaran Angkatan 1998</p>
-
-<p>© 2026</p>
-
-</div>
-
+    <div class="footer-inner">
+        <p><strong>SPENSA 98</strong></p>
+        <p>Alumni SMP Negeri 1 Ungaran Angkatan 1998</p>
+        <p>&copy; 2026</p>
+    </div>
 </footer>
 
 <template id="photoTemplate">
-
-<div class="photo-card">
-
-<img loading="lazy" draggable="false">
-
-</div>
-
+    <div class="photo-card">
+        <img loading="lazy" draggable="false">
+    </div>
 </template>
 
 <script src="app.js"></script>
 
-</body>
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js");
+    });
+}
+</script>
 
+</body>
 </html>
