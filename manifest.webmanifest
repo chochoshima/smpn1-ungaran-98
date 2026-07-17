@@ -1,0 +1,22 @@
+{
+    "name": "SPENSA 98 Photo Archive",
+    "short_name": "SPENSA 98",
+    "description": "Galeri Foto Reuni SMP Negeri 1 Ungaran Angkatan 1998",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0b3d91",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
