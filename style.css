@@ -1627,17 +1627,17 @@ body::before{
     pointer-events:auto;
 }
 
-@media(max-width:768px){
-
-    .viewer{
-        position:fixed;
-        width:100%;
-        height:100dvh;
-        overflow:hidden;
+@media (max-width:768px) {
+    #viewerImage {
+        width: 100%;       /* Ubah dari auto ke 100% */
+        height: auto;      /* Biarkan auto agar proporsi terjaga */
+        max-width: 100vw;
+        max-height: 80vh;  /* Batasi tinggi agar tidak tertutup tombol bawah */
+        object-fit: contain; /* Memastikan seluruh gambar terlihat */
     }
-
-    .viewer-content{
-        touch-action:none;
+    
+    /* Pastikan viewer content juga fleksibel */
+    .viewer-content {
+        padding: 10px;
     }
-
 }
