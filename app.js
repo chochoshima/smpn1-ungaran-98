@@ -66,6 +66,26 @@ async function loadGallery() {
 }
 
 /* ==========================================
+   BIND CLICK
+========================================== */
+
+function bindClick() {
+
+    gallery.querySelectorAll("img").forEach(img => {
+
+        img.onclick = () => {
+
+            current = Number(img.dataset.index);
+
+            openViewer();
+
+        };
+
+    });
+
+}
+
+/* ==========================================
    RENDER GALLERY
 ========================================== */
 
@@ -111,25 +131,17 @@ function renderGallery() {
    CLICK PHOTO
 ========================================== */
 
-function bindClick() {
+function openViewer() {
 
-    document.querySelectorAll(".photo-card img").forEach(img => {
+    viewer.classList.add("show");
 
-        const open = (e) => {
+    viewerImage.src = photos[current].full;
 
-            e.preventDefault();
-            e.stopPropagation();
+    caption.textContent = photos[current].name;
 
-            current = Number(img.dataset.index);
+    document.body.style.overflow = "hidden";
 
-            openViewer();
-
-        };
-
-        img.addEventListener("click", open, { passive: false });
-        img.addEventListener("touchend", open, { passive: false });
-
-    });
+    preloadNext();
 
 }
 
