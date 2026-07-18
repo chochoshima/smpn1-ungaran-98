@@ -1,256 +1,339 @@
-/* ===========================
+/* ==================================================
+   01. ROOT & RESET
    SPENSA 98 PHOTO ARCHIVE
-=========================== */
+================================================== */
 
-*{
+/* Reset */
+
+*,
+*::before,
+*::after{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+/* Theme */
+
 :root{
 
-    --primary:#0b3d91;
-    --background:#f5f7fb;
-    --card:#ffffff;
-    --text:#222;
-    --muted:#777;
+    /* Brand */
 
-    --radius:16px;
+    --primary:#0A3D9B;
+    --primary-dark:#062A73;
+    --primary-light:#2F7BFF;
+    --secondary:#FFFFFF;
+
+    /* Background */
+
+    --background:#EEF4FF;
+    --surface:#FFFFFF;
+
+    /* Text */
+
+    --text:#1B2B4A;
+    --text-light:#64748B;
+
+    /* Border */
+
+    --border:#D8E6FF;
+
+    /* Shadow */
+
+    --shadow-sm:0 4px 12px rgba(10,61,155,.08);
+    --shadow-md:0 10px 24px rgba(10,61,155,.14);
+    --shadow-lg:0 18px 40px rgba(10,61,155,.20);
+
+    /* Radius */
+
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:22px;
+
+    /* Animation */
+
+    --speed-fast:.20s;
+    --speed-normal:.30s;
+    --speed-slow:.45s;
+
+    /* Header */
+
+    --header-height:82px;
+
+    /* Viewer */
+
+    --viewer-bg:rgba(0,0,0,.95);
 
 }
+
+/* HTML */
 
 html{
+
     scroll-behavior:smooth;
+
+    -webkit-text-size-adjust:100%;
+
 }
+
+/* Body */
 
 body{
 
     font-family:'Inter',sans-serif;
-    background:var(--background);
+
+    background:
+    linear-gradient(
+        180deg,
+        #F6F9FF 0%,
+        #EEF4FF 100%
+    );
+
     color:var(--text);
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+    text-rendering:optimizeLegibility;
+
+    -webkit-font-smoothing:antialiased;
 
 }
 
+/* Images */
 
-/* ===========================
-   HEADER
-=========================== */
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+/* Links */
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+/* Button */
+
+button{
+
+    font:inherit;
+
+    cursor:pointer;
+
+    border:none;
+
+    outline:none;
+
+}
+
+/* Input */
+
+input{
+
+    font:inherit;
+
+    outline:none;
+
+}
+
+/* List */
+
+ul,
+ol{
+
+    list-style:none;
+
+}
+
+/* Selection */
+
+::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ECEFF3;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#B8C2D1;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary);
+
+}
+
+/* Utility */
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.fade{
+
+    transition:all var(--speed-normal) ease;
+
+}
+
+/* ==================================================
+   02. HEADER
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
 
 .header{
 
     position:sticky;
+
     top:0;
 
-    z-index:100;
-
-    background:#fff;
+    z-index:1000;
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 
-    padding:16px 20px;
+    gap:20px;
 
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    width:100%;
+
+    min-height:var(--header-height);
+
+    padding:14px 24px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0A3D9B,
+        #1A63E8,
+        #0A3D9B
+    );
+
+    color:white;
+
+    box-shadow:var(--shadow-md);
 
 }
+
+/* ==========================
+   BRAND
+========================== */
 
 .brand{
 
     display:flex;
+
     align-items:center;
-    gap:15px;
+
+    gap:16px;
+
+    min-width:0;
 
 }
 
+/* ==========================
+   LOGO
+========================== */
+
 .logo{
 
-    width:64px;
-    height:64px;
+    width:60px;
+
+    height:60px;
+
     object-fit:contain;
+
+    flex-shrink:0;
+
+    transition:transform var(--speed-normal);
+
+}
+
+.logo:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.brand-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    min-width:0;
 
 }
 
 .brand h1{
 
-    font-size:24px;
+    font-size:1.6rem;
+
     font-weight:800;
+
+    color:white;
+
+    letter-spacing:.6px;
 
 }
 
 .brand p{
 
-    font-size:14px;
-    color:var(--muted);
+    color:rgba(255,255,255,.82);
+
+    font-size:.92rem;
 
 }
+
+/* ==========================
+   PHOTO COUNT
+========================== */
 
 .photo-count{
-
-    text-align:center;
-
-}
-
-.photo-count span{
-
-    display:block;
-
-    font-size:30px;
-    font-weight:800;
-
-    color:var(--primary);
-
-}
-
-.photo-count small{
-
-    color:var(--muted);
-
-}
-
-
-/* ===========================
-   LOADING
-=========================== */
-
-.loading{
-
-    text-align:center;
-
-    padding:60px 20px;
-
-}
-
-.spinner{
-
-    width:48px;
-    height:48px;
-
-    border:4px solid #ddd;
-    border-top:4px solid var(--primary);
-
-    border-radius:50%;
-
-    margin:auto;
-
-    animation:spin 1s linear infinite;
-
-}
-
-@keyframes spin{
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-
-/* ===========================
-   EMPTY
-=========================== */
-
-.empty-state{
-
-    display:none;
-
-    text-align:center;
-
-    padding:80px 20px;
-
-}
-
-.empty-icon{
-
-    font-size:70px;
-
-    margin-bottom:15px;
-
-}
-
-
-/* ===========================
-   GALLERY
-=========================== */
-
-.gallery{
-
-    columns:4 280px;
-
-    column-gap:16px;
-
-    padding:18px;
-
-}
-
-.photo-card{
-
-    break-inside:avoid;
-
-    margin-bottom:16px;
-
-}
-
-.photo-card img{
-
-    width:100%;
-
-    display:block;
-
-    border-radius:16px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-    background:#eee;
-
-}
-
-.photo-card img:hover{
-
-    transform:scale(1.03);
-
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
-
-}
-
-
-/* ===========================
-   VIEWER
-=========================== */
-
-.viewer{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.95);
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:9999;
-
-}
-
-.viewer.show{
-
-    display:flex;
-
-}
-
-.viewer-content{
-
-    width:100%;
-    height:100%;
 
     display:flex;
 
@@ -260,120 +343,612 @@ body{
 
     align-items:center;
 
+    min-width:80px;
+
+    padding:10px 16px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #2F7BFF,
+        #0A3D9B
+    );
+
+    border:1px solid rgba(255,255,255,.35);
+
+    box-shadow:0 8px 24px rgba(0,40,120,.35);
+
 }
 
-#viewerImage{
+.photo-count span{
 
-    max-width:100%;
-    max-height:80vh;
-
-    object-fit:contain;
+    color:white;
 
 }
 
-.caption{
+.photo-count small{
+
+    color:#DCE8FF;
+
+}
+
+/* ==========================
+   HEADER SHRINK
+   (dipakai nanti oleh JS)
+========================== */
+
+.header.shrink{
+
+    min-height:64px;
+
+    padding:10px 20px;
+
+}
+
+.header.shrink .logo{
+
+    width:46px;
+
+    height:46px;
+
+}
+
+.header.shrink .brand h1{
+
+    font-size:1.25rem;
+
+}
+
+.header.shrink .brand p{
+
+    font-size:.80rem;
+
+}
+
+.header.shrink .photo-count{
+
+    padding:8px 14px;
+
+}
+
+.header.shrink .photo-count span{
+
+    font-size:1.45rem;
+
+}
+
+/* ==========================
+   HOVER
+========================== */
+
+.header:hover{
+
+    box-shadow:var(--shadow-md);
+
+}
+
+/* ==================================================
+   03. GALLERY
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   MAIN
+========================== */
+
+main{
+
+    width:100%;
+
+    max-width:1800px;
+
+    margin:auto;
+
+    padding:22px;
+
+}
+
+/* ==========================
+   GALLERY
+========================== */
+
+.gallery{
+
+    column-count:5;
+
+    column-gap:18px;
+
+    width:100%;
+
+}
+
+/* Desktop */
+
+@media (max-width:1600px){
+
+    .gallery{
+
+        column-count:4;
+
+    }
+
+}
+
+/* Laptop */
+
+@media (max-width:1200px){
+
+    .gallery{
+
+        column-count:3;
+
+    }
+
+}
+
+/* Tablet */
+
+@media (max-width:768px){
+
+    .gallery{
+
+        column-count:2;
+
+        column-gap:12px;
+
+    }
+
+}
+
+/* HP kecil */
+
+@media (max-width:480px){
+
+    .gallery{
+
+        column-count:2;
+
+        column-gap:10px;
+
+    }
+
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.photo-card{
+
+    position:relative;
+
+    width:100%;
+
+    margin-bottom:18px;
+
+    break-inside:avoid;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:white;
+
+    border:1px solid #D9E6FF;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.3s;
+
+}
+
+/* ==========================
+   IMAGE
+========================== */
+
+.photo-card img{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    cursor:pointer;
+
+    border-radius:18px;
+
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+
+    background:#ECECEC;
+
+}
+
+/* ==========================
+   HOVER
+========================== */
+
+.photo-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#2F7BFF;
+
+    box-shadow:
+
+    0 20px 42px rgba(10,61,155,.18);
+
+}
+
+.photo-card:hover img{
+
+    transform:scale(1.04);
+
+}
+
+/* ==========================
+   OVERLAY
+========================== */
+
+.photo-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        to top,
+        rgba(0,0,0,.15),
+        transparent 40%
+    );
+
+    opacity:0;
+
+    transition:.30s;
+
+    pointer-events:none;
+
+}
+
+.photo-card:hover::after{
+
+    opacity:1;
+
+}
+
+/* ==========================
+   LOADING
+========================== */
+
+.photo-card img:not([src]){
+
+    min-height:240px;
+
+}
+
+/* ==========================
+   IMAGE LOADED
+========================== */
+
+.photo-card.loaded img{
+
+    animation:fadePhoto .45s ease;
+
+}
+
+/* ==========================
+   SKELETON
+========================== */
+
+.photo-card.loading{
+
+    min-height:220px;
+
+    background:linear-gradient(
+        90deg,
+        #ececec 25%,
+        #f7f7f7 37%,
+        #ececec 63%
+    );
+
+    background-size:400% 100%;
+
+    animation:skeleton 1.4s infinite;
+
+}
+
+/* ==========================
+   BADGE
+========================== */
+
+.photo-card .badge{
+
+    position:absolute;
+
+    top:10px;
+
+    right:10px;
+
+    padding:6px 10px;
+
+    border-radius:30px;
+
+    background:rgba(0,0,0,.45);
 
     color:#fff;
 
-    margin-top:20px;
+    font-size:12px;
 
-    font-size:15px;
+    backdrop-filter:blur(6px);
+
+    opacity:0;
+
+    transition:.25s;
 
 }
 
+.photo-card:hover .badge{
 
-/* ===========================
-   ACTIONS
-=========================== */
+    opacity:1;
 
-.viewer-actions{
+}
+
+/* ==========================
+   TAP EFFECT MOBILE
+========================== */
+
+.photo-card:active{
+
+    transform:scale(.98);
+
+}
+
+/* ==========================
+   PREVENT DRAG
+========================== */
+
+.photo-card img{
+
+    -webkit-user-drag:none;
+
+    user-select:none;
+
+}
+
+/* ==========================
+   FADE ANIMATION
+========================== */
+
+@keyframes fadePhoto{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================
+   SKELETON ANIMATION
+========================== */
+
+@keyframes skeleton{
+
+    0%{
+
+        background-position:100% 0;
+
+    }
+
+    100%{
+
+        background-position:-100% 0;
+
+    }
+
+}
+
+/* ==================================================
+   04. VIEWER (FULLSCREEN)
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   FULLSCREEN
+========================== */
+
+.viewer{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #04152F,
+
+    #072456,
+
+    #000814
+
+    );
+
+    z-index:99999;
+
+}
+
+.viewer.show{
 
     display:flex;
 
-    gap:12px;
-
-    margin-top:20px;
+    opacity:1;
 
 }
 
-.viewer-actions button{
+/* ==========================
+   CONTENT
+========================== */
 
-    border:none;
+.viewer-content{
 
-    background:#fff;
+    position:relative;
 
-    padding:12px 18px;
+    width:100%;
 
-    border-radius:40px;
+    height:100%;
 
-    cursor:pointer;
+    display:flex;
 
-    font-weight:600;
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
 
 }
 
-.viewer-actions button:hover{
+/* ==========================
+   IMAGE
+========================== */
 
-    background:#eee;
+#viewerImage{
+
+    max-width:96vw;
+
+    max-height:92vh;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+    border-radius:10px;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+    transform:scale(1);
+
+    transition:
+        opacity .25s,
+        transform .25s;
 
 }
 
+/* ==========================
+   FADE
+========================== */
 
-/* ===========================
-   CLOSE
-=========================== */
+.viewer.show #viewerImage{
+
+    animation:viewerFade .25s ease;
+
+}
+
+/* ==========================
+   CAPTION
+========================== */
+
+.caption{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    max-width:90%;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    font-size:14px;
+
+    text-align:center;
+
+    backdrop-filter:blur(8px);
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+/* ==========================
+   CLOSE BUTTON
+========================== */
 
 .close-btn{
 
-    position:absolute;
+    background:rgba(255,255,255,.18);
 
-    top:20px;
-    right:20px;
+    backdrop-filter:blur(10px);
 
-    width:50px;
-    height:50px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.2);
-
-    color:#fff;
-
-    font-size:28px;
-
-    cursor:pointer;
+    border:1px solid rgba(255,255,255,.2);
 
 }
 
+.close-btn:hover{
 
-/* ===========================
-   NEXT PREV
-=========================== */
+    background:rgba(255,255,255,.28);
 
-.nav{
+}
 
-    position:absolute;
+/* ==========================
+   NAVIGATION
+========================== */
 
-    top:50%;
+..nav{
 
-    transform:translateY(-50%);
+    background:rgba(255,255,255,.18);
 
-    width:56px;
-    height:56px;
+    backdrop-filter:blur(10px);
 
-    border:none;
+    border:1px solid rgba(255,255,255,.2);
 
-    border-radius:50%;
+}
 
-    background:rgba(255,255,255,.2);
+.nav:hover{
 
-    color:#fff;
-
-    font-size:34px;
-
-    cursor:pointer;
+    background:rgba(255,255,255,.28);
 
 }
 
@@ -389,111 +964,642 @@ body{
 
 }
 
+/* ==========================
+   ACTION BUTTONS
+========================== */
 
-/* ===========================
-   TOP BUTTON
-=========================== */
+.viewer-actions{
 
-.top-button{
+    position:absolute;
 
-    position:fixed;
+    bottom:75px;
 
-    right:20px;
-    bottom:20px;
+    left:50%;
 
-    width:55px;
-    height:55px;
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.viewer-actions button{
+
+    min-width:46px;
+
+    height:46px;
+
+    padding:0 18px;
 
     border:none;
 
-    border-radius:50%;
+    border-radius:999px;
 
-    background:var(--primary);
+    background:rgba(255,255,255,.18);
 
     color:#fff;
 
-    font-size:24px;
+    font-size:14px;
 
     cursor:pointer;
 
-    box-shadow:0 6px 20px rgba(0,0,0,.2);
+    backdrop-filter:blur(8px);
+
+    transition:.25s;
 
 }
 
+.viewer-actions button:hover{
 
-/* ===========================
-   FOOTER
-=========================== */
-
-footer{
-
-    margin-top:30px;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-    color:#666;
-
-    font-size:14px;
+    background:rgba(255,255,255,.32);
 
 }
 
+/* ==========================
+   LOADING
+========================== */
 
-/* ===========================
+.viewer.loading #viewerImage{
+
+    opacity:.4;
+
+}
+
+/* ==========================
    MOBILE
-=========================== */
+========================== */
 
-@media(max-width:768px){
+@media (max-width:768px){
 
-    .gallery{
+    #viewerImage{
 
-        columns:2;
+        max-width:100vw;
 
-        column-gap:10px;
+        max-height:88vh;
 
-        padding:10px;
-
-    }
-
-    .header{
-
-        padding:12px;
-
-    }
-
-    .logo{
-
-        width:52px;
-        height:52px;
-
-    }
-
-    .brand h1{
-
-        font-size:20px;
-
-    }
-
-    .brand p{
-
-        font-size:12px;
-
-    }
-
-    .photo-count span{
-
-        font-size:22px;
+        border-radius:0;
 
     }
 
     .nav{
 
-        width:44px;
-        height:44px;
+        width:46px;
+
+        height:46px;
 
         font-size:24px;
 
     }
+
+    .prev{
+
+        left:8px;
+
+    }
+
+    .next{
+
+        right:8px;
+
+    }
+
+    .close-btn{
+
+        top:10px;
+
+        right:10px;
+
+        width:42px;
+
+        height:42px;
+
+        font-size:24px;
+
+    }
+
+    .caption{
+
+        bottom:15px;
+
+        font-size:13px;
+
+        max-width:95%;
+
+    }
+
+}
+
+/* ==========================
+   ANIMATION
+========================== */
+
+@keyframes viewerFade{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==================================================
+   05. BUTTONS & FLOATING ACTION
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   BACK TO TOP
+========================== */
+
+.top-button{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    width:58px;
+
+    height:58px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #2F7BFF,
+
+    #0A3D9B
+
+    );
+
+    color:white;
+
+    box-shadow:
+
+    0 12px 30px rgba(10,61,155,.35);
+
+}
+
+.top-button.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.top-button:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--primary-light);
+
+}
+
+/* ==========================
+   VIEWER ACTIONS
+========================== */
+
+.viewer-actions{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:80px;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:14px;
+
+    z-index:20;
+
+}
+
+/* ==========================
+   BUTTON STYLE
+========================== */
+
+.viewer-actions button{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    height:46px;
+
+    padding:0 18px;
+
+    border-radius:999px;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    rgba(47,123,255,.85),
+
+    rgba(10,61,155,.92)
+
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    border:1px solid rgba(255,255,255,.18);
+
+}
+
+.viewer-actions button:hover{
+
+    background:rgba(255,255,255,.28);
+
+    transform:translateY(-2px);
+
+}
+
+.viewer-actions button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================
+   DOWNLOAD
+========================== */
+
+#downloadBtn{
+
+    min-width:120px;
+
+}
+
+/* ==========================
+   SHARE
+========================== */
+
+#shareBtn{
+
+    min-width:100px;
+
+}
+
+/* ==========================
+   LOADING BUTTON
+========================== */
+
+.button-loading{
+
+    pointer-events:none;
+
+    opacity:.6;
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+    .viewer-actions{
+
+        bottom:60px;
+
+        gap:10px;
+
+    }
+
+    .viewer-actions button{
+
+        height:42px;
+
+        padding:0 14px;
+
+        font-size:13px;
+
+    }
+
+    .top-button{
+
+        width:50px;
+
+        height:50px;
+
+        right:16px;
+
+        bottom:16px;
+
+        font-size:20px;
+
+    }
+
+}
+
+/* ==================================================
+   07. ANIMATION
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   FADE IN
+========================== */
+
+.fade-in{
+
+    animation:fadeIn .45s ease both;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(12px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================
+   ZOOM IN
+========================== */
+
+.zoom-in{
+
+    animation:zoomIn .30s ease both;
+
+}
+
+@keyframes zoomIn{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================
+   PHOTO HOVER
+========================== */
+
+.photo-card{
+
+    will-change:transform;
+
+}
+
+.photo-card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.photo-card:hover img{
+
+    transform:scale(1.04);
+
+}
+
+/* ==========================
+   IMAGE LOADED
+========================== */
+
+.photo-card img{
+
+    opacity:0;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+
+}
+
+.photo-card img.loaded{
+
+    opacity:1;
+
+}
+
+/* ==========================
+   VIEWER IMAGE
+========================== */
+
+#viewerImage{
+
+    animation:viewerOpen .25s ease;
+
+}
+
+@keyframes viewerOpen{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================
+   SPINNER
+========================== */
+
+.spinner{
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================
+   FLOAT BUTTON
+========================== */
+
+.top-button{
+
+    transition:
+        transform .25s,
+        opacity .25s,
+        background .25s;
+
+}
+
+.top-button:hover{
+
+    transform:translateY(-5px);
+
+}
+
+/* ==========================
+   BUTTON EFFECT
+========================== */
+
+button{
+
+    transition:
+        background .25s,
+        color .25s,
+        transform .20s;
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EAF2FF;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #2F7BFF,
+
+    #0A3D9B
+
+    );
+
+    border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#083480;
+
+}
+
+/* ==========================
+   REDUCE MOTION
+========================== */
+
+@media (prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+
+    }
+
+}
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:url("logo.png") center center no-repeat;
+
+    background-size:650px;
+
+    opacity:.025;
+
+    pointer-events:none;
+
+    z-index:-1;
 
 }
