@@ -3,6 +3,8 @@
    SPENSA 98 PHOTO ARCHIVE
 ================================================== */
 
+/* Reset */
+
 *,
 *::before,
 *::after{
@@ -11,6 +13,8 @@
     box-sizing:border-box;
 }
 
+/* Theme */
+
 :root{
 
     /* Brand */
@@ -18,8 +22,9 @@
     --primary:#0A3D9B;
     --primary-dark:#062A73;
     --primary-light:#2F7BFF;
+    --secondary:#FFFFFF;
 
-    /* Surface */
+    /* Background */
 
     --background:#EEF4FF;
     --surface:#FFFFFF;
@@ -33,17 +38,17 @@
 
     --border:#D8E6FF;
 
+    /* Shadow */
+
+    --shadow-sm:0 4px 12px rgba(10,61,155,.08);
+    --shadow-md:0 10px 24px rgba(10,61,155,.14);
+    --shadow-lg:0 18px 40px rgba(10,61,155,.20);
+
     /* Radius */
 
     --radius-sm:10px;
     --radius-md:16px;
     --radius-lg:22px;
-
-    /* Shadow */
-
-    --shadow-sm:0 4px 12px rgba(10,61,155,.08);
-    --shadow-md:0 12px 28px rgba(10,61,155,.14);
-    --shadow-lg:0 20px 44px rgba(10,61,155,.22);
 
     /* Animation */
 
@@ -55,32 +60,42 @@
 
     --header-height:82px;
 
+    /* Viewer */
+
+    --viewer-bg:rgba(0,0,0,.95);
+
 }
+
+/* HTML */
 
 html{
 
     scroll-behavior:smooth;
+
     -webkit-text-size-adjust:100%;
 
 }
 
+/* Body */
+
 body{
 
-    min-height:100vh;
-
     font-family:'Inter',sans-serif;
-
-    color:var(--text);
 
     background:
     linear-gradient(
         180deg,
-        #F8FAFF 0%,
-        #EEF4FF 55%,
-        #E8F0FF 100%
+        #F6F9FF 0%,
+        #EEF4FF 100%
     );
 
+    color:var(--text);
+
+    line-height:1.6;
+
     overflow-x:hidden;
+
+    min-height:100vh;
 
     text-rendering:optimizeLegibility;
 
@@ -88,25 +103,7 @@ body{
 
 }
 
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:url("logo.png") center center no-repeat;
-
-    background-size:620px;
-
-    opacity:.025;
-
-    pointer-events:none;
-
-    z-index:-1;
-
-}
+/* Images */
 
 img{
 
@@ -114,13 +111,13 @@ img{
 
     max-width:100%;
 
-    height:auto;
-
     user-select:none;
 
     -webkit-user-drag:none;
 
 }
+
+/* Links */
 
 a{
 
@@ -130,17 +127,21 @@ a{
 
 }
 
+/* Button */
+
 button{
 
     font:inherit;
 
-    border:none;
-
     cursor:pointer;
+
+    border:none;
 
     outline:none;
 
 }
+
+/* Input */
 
 input{
 
@@ -150,12 +151,16 @@ input{
 
 }
 
+/* List */
+
 ul,
 ol{
 
     list-style:none;
 
 }
+
+/* Selection */
 
 ::selection{
 
@@ -175,28 +180,25 @@ ol{
 
 ::-webkit-scrollbar-track{
 
-    background:#EAF2FF;
+    background:#ECEFF3;
 
 }
 
 ::-webkit-scrollbar-thumb{
 
-    background:
-    linear-gradient(
-        180deg,
-        #2F7BFF,
-        #0A3D9B
-    );
+    background:#B8C2D1;
 
-    border-radius:30px;
+    border-radius:20px;
 
 }
 
 ::-webkit-scrollbar-thumb:hover{
 
-    background:#083480;
+    background:var(--primary);
 
 }
+
+/* Utility */
 
 .hidden{
 
@@ -204,8 +206,15 @@ ol{
 
 }
 
+.fade{
+
+    transition:all var(--speed-normal) ease;
+
+}
+
 /* ==================================================
    02. HEADER
+   SPENSA 98 PHOTO ARCHIVE
 ================================================== */
 
 .header{
@@ -218,11 +227,11 @@ ol{
 
     display:flex;
 
-    align-items:center;
-
     justify-content:space-between;
 
-    gap:18px;
+    align-items:center;
+
+    gap:20px;
 
     width:100%;
 
@@ -233,20 +242,20 @@ ol{
     background:
     linear-gradient(
         135deg,
-        #0A3D9B 0%,
-        #236EF6 50%,
-        #0A3D9B 100%
+        #0A3D9B,
+        #1A63E8,
+        #0A3D9B
     );
 
-    color:#fff;
+    color:white;
 
     box-shadow:var(--shadow-md);
 
-    transition:
-        min-height .25s ease,
-        padding .25s ease;
-
 }
+
+/* ==========================
+   BRAND
+========================== */
 
 .brand{
 
@@ -258,9 +267,11 @@ ol{
 
     min-width:0;
 
-    flex:1;
-
 }
+
+/* ==========================
+   LOGO
+========================== */
 
 .logo{
 
@@ -268,11 +279,11 @@ ol{
 
     height:60px;
 
-    flex-shrink:0;
-
     object-fit:contain;
 
-    transition:transform .25s ease;
+    flex-shrink:0;
+
+    transition:transform var(--speed-normal);
 
 }
 
@@ -282,37 +293,47 @@ ol{
 
 }
 
+/* ==========================
+   TITLE
+========================== */
+
+.brand-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    min-width:0;
+
+}
+
 .brand h1{
 
-    font-size:1.55rem;
+    font-size:1.6rem;
 
     font-weight:800;
 
-    letter-spacing:.5px;
+    color:white;
 
-    color:#fff;
+    letter-spacing:.6px;
 
 }
 
 .brand p{
 
-    margin-top:2px;
-
     color:rgba(255,255,255,.82);
 
     font-size:.92rem;
 
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
 }
 
-.photo-count{
+/* ==========================
+   PHOTO COUNT
+========================== */
 
-    flex-shrink:0;
+.photo-count{
 
     display:flex;
 
@@ -322,7 +343,7 @@ ol{
 
     align-items:center;
 
-    min-width:82px;
+    min-width:80px;
 
     padding:10px 16px;
 
@@ -335,38 +356,32 @@ ol{
         #0A3D9B
     );
 
-    border:1px solid rgba(255,255,255,.25);
+    border:1px solid rgba(255,255,255,.35);
 
-    box-shadow:
-        0 10px 26px rgba(0,40,120,.35);
+    box-shadow:0 8px 24px rgba(0,40,120,.35);
 
 }
 
 .photo-count span{
 
-    font-size:1.7rem;
-
-    font-weight:800;
-
-    line-height:1;
-
-    color:#fff;
+    color:white;
 
 }
 
 .photo-count small{
 
-    margin-top:4px;
-
-    font-size:.78rem;
-
     color:#DCE8FF;
 
 }
 
+/* ==========================
+   HEADER SHRINK
+   (dipakai nanti oleh JS)
+========================== */
+
 .header.shrink{
 
-    min-height:66px;
+    min-height:64px;
 
     padding:10px 20px;
 
@@ -382,19 +397,17 @@ ol{
 
 .header.shrink .brand h1{
 
-    font-size:1.28rem;
+    font-size:1.25rem;
 
 }
 
 .header.shrink .brand p{
 
-    font-size:.82rem;
+    font-size:.80rem;
 
 }
 
 .header.shrink .photo-count{
-
-    min-width:72px;
 
     padding:8px 14px;
 
@@ -407,52 +420,12 @@ ol{
 }
 
 /* ==========================
-   MOBILE
+   HOVER
 ========================== */
 
-@media (max-width:768px){
+.header:hover{
 
-    .header{
-
-        padding:12px 14px;
-
-        gap:12px;
-
-    }
-
-    .logo{
-
-        width:46px;
-
-        height:46px;
-
-    }
-
-    .brand h1{
-
-        font-size:1.15rem;
-
-    }
-
-    .brand p{
-
-        font-size:.72rem;
-
-    }
-
-    .photo-count{
-
-        min-width:64px;
-
-        padding:8px 10px;
-
-    }
-
-    .photo-count span{
-
-        font-size:1.35rem;
-
-    }
+    box-shadow:var(--shadow-md);
 
 }
 
@@ -473,7 +446,7 @@ main{
 
     margin:auto;
 
-    padding:24px;
+    padding:22px;
 
 }
 
@@ -486,6 +459,8 @@ main{
     column-count:5;
 
     column-gap:18px;
+
+    width:100%;
 
 }
 
@@ -517,12 +492,6 @@ main{
 
 @media (max-width:768px){
 
-    main{
-
-        padding:14px;
-
-    }
-
     .gallery{
 
         column-count:2;
@@ -533,15 +502,9 @@ main{
 
 }
 
-/* HP */
+/* HP kecil */
 
 @media (max-width:480px){
-
-    main{
-
-        padding:10px;
-
-    }
 
     .gallery{
 
@@ -554,14 +517,12 @@ main{
 }
 
 /* ==========================
-   PHOTO CARD
+   CARD
 ========================== */
 
 .photo-card{
 
     position:relative;
-
-    display:block;
 
     width:100%;
 
@@ -573,19 +534,13 @@ main{
 
     border-radius:20px;
 
-    background:#fff;
+    background:white;
 
-    border:1px solid var(--border);
+    border:1px solid #D9E6FF;
 
     box-shadow:var(--shadow-sm);
 
-    transition:
-
-        transform .25s ease,
-
-        box-shadow .25s ease,
-
-        border-color .25s ease;
+    transition:.3s;
 
 }
 
@@ -603,13 +558,13 @@ main{
 
     cursor:pointer;
 
-    background:#F3F6FB;
+    border-radius:18px;
 
     transition:
+        transform .35s ease,
+        filter .35s ease;
 
-        transform .30s ease,
-
-        filter .30s ease;
+    background:#ECECEC;
 
 }
 
@@ -619,27 +574,19 @@ main{
 
 .photo-card:hover{
 
-    transform:translateY(-5px);
+    transform:translateY(-6px);
 
-    border-color:var(--primary-light);
+    border-color:#2F7BFF;
 
-    box-shadow:var(--shadow-lg);
+    box-shadow:
+
+    0 20px 42px rgba(10,61,155,.18);
 
 }
 
 .photo-card:hover img{
 
     transform:scale(1.04);
-
-}
-
-/* ==========================
-   ACTIVE MOBILE
-========================== */
-
-.photo-card:active{
-
-    transform:scale(.98);
 
 }
 
@@ -655,21 +602,15 @@ main{
 
     inset:0;
 
-    background:
-
-    linear-gradient(
-
+    background:linear-gradient(
         to top,
-
         rgba(0,0,0,.15),
-
-        transparent 45%
-
+        transparent 40%
     );
 
     opacity:0;
 
-    transition:opacity .25s ease;
+    transition:.30s;
 
     pointer-events:none;
 
@@ -678,6 +619,47 @@ main{
 .photo-card:hover::after{
 
     opacity:1;
+
+}
+
+/* ==========================
+   LOADING
+========================== */
+
+.photo-card img:not([src]){
+
+    min-height:240px;
+
+}
+
+/* ==========================
+   IMAGE LOADED
+========================== */
+
+.photo-card.loaded img{
+
+    animation:fadePhoto .45s ease;
+
+}
+
+/* ==========================
+   SKELETON
+========================== */
+
+.photo-card.loading{
+
+    min-height:220px;
+
+    background:linear-gradient(
+        90deg,
+        #ececec 25%,
+        #f7f7f7 37%,
+        #ececec 63%
+    );
+
+    background-size:400% 100%;
+
+    animation:skeleton 1.4s infinite;
 
 }
 
@@ -695,7 +677,7 @@ main{
 
     padding:6px 10px;
 
-    border-radius:999px;
+    border-radius:30px;
 
     background:rgba(0,0,0,.45);
 
@@ -703,7 +685,7 @@ main{
 
     font-size:12px;
 
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(6px);
 
     opacity:0;
 
@@ -718,58 +700,30 @@ main{
 }
 
 /* ==========================
-   LOADING
+   TAP EFFECT MOBILE
 ========================== */
 
-.photo-card.loading{
+.photo-card:active{
 
-    min-height:220px;
-
-    background:
-
-    linear-gradient(
-
-        90deg,
-
-        #ECECEC 25%,
-
-        #F8F8F8 37%,
-
-        #ECECEC 63%
-
-    );
-
-    background-size:400% 100%;
-
-    animation:skeleton 1.4s linear infinite;
-
-}
-
-@keyframes skeleton{
-
-    from{
-
-        background-position:100% 0;
-
-    }
-
-    to{
-
-        background-position:-100% 0;
-
-    }
+    transform:scale(.98);
 
 }
 
 /* ==========================
-   FADE
+   PREVENT DRAG
 ========================== */
 
-.photo-card.loaded{
+.photo-card img{
 
-    animation:fadePhoto .35s ease;
+    -webkit-user-drag:none;
+
+    user-select:none;
 
 }
+
+/* ==========================
+   FADE ANIMATION
+========================== */
 
 @keyframes fadePhoto{
 
@@ -777,7 +731,7 @@ main{
 
         opacity:0;
 
-        transform:translateY(10px);
+        transform:scale(.97);
 
     }
 
@@ -785,45 +739,830 @@ main{
 
         opacity:1;
 
-        transform:none;
+        transform:scale(1);
 
     }
 
 }
 
 /* ==========================
-   MOBILE OPTIMIZATION
+   SKELETON ANIMATION
+========================== */
+
+@keyframes skeleton{
+
+    0%{
+
+        background-position:100% 0;
+
+    }
+
+    100%{
+
+        background-position:-100% 0;
+
+    }
+
+}
+
+/* ==================================================
+   04. VIEWER (FULLSCREEN)
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   FULLSCREEN
+========================== */
+
+.viewer{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #04152F,
+
+    #072456,
+
+    #000814
+
+    );
+
+    z-index:99999;
+
+}
+
+.viewer.show{
+
+    display:flex;
+
+    opacity:1;
+
+}
+
+/* ==========================
+   CONTENT
+========================== */
+
+.viewer-content{
+
+    position:relative;
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+}
+
+/* ==========================
+   IMAGE
+========================== */
+
+#viewerImage{
+
+    max-width:96vw;
+
+    max-height:92vh;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+    border-radius:10px;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+    transform:scale(1);
+
+    transition:
+        opacity .25s,
+        transform .25s;
+
+}
+
+/* ==========================
+   FADE
+========================== */
+
+.viewer.show #viewerImage{
+
+    animation:viewerFade .25s ease;
+
+}
+
+/* ==========================
+   CAPTION
+========================== */
+
+.caption{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    max-width:90%;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(0,0,0,.45);
+
+    color:#fff;
+
+    font-size:14px;
+
+    text-align:center;
+
+    backdrop-filter:blur(8px);
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+/* ==========================
+   CLOSE BUTTON
+========================== */
+
+.close-btn{
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+}
+
+.close-btn:hover{
+
+    background:rgba(255,255,255,.28);
+
+}
+
+/* ==========================
+   NAVIGATION
+========================== */
+
+.nav{
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+}
+
+.nav:hover{
+
+    background:rgba(255,255,255,.28);
+
+}
+
+.prev{
+
+    left:20px;
+
+}
+
+.next{
+
+    right:20px;
+
+}
+
+/* ==========================
+   ACTION BUTTONS
+========================== */
+
+.viewer-actions{
+
+    position:absolute;
+
+    bottom:75px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.viewer-actions button{
+
+    min-width:46px;
+
+    height:46px;
+
+    padding:0 18px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.18);
+
+    color:#fff;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(8px);
+
+    transition:.25s;
+
+}
+
+.viewer-actions button:hover{
+
+    background:rgba(255,255,255,.32);
+
+}
+
+/* ==========================
+   LOADING
+========================== */
+
+.viewer.loading #viewerImage{
+
+    opacity:.4;
+
+}
+
+/* ==========================
+   MOBILE
 ========================== */
 
 @media (max-width:768px){
 
-    .photo-card{
+    #viewerImage{
 
-        border-radius:16px;
+        max-width:100vw;
 
-        margin-bottom:12px;
+        max-height:88vh;
 
-    }
-
-    .photo-card img{
-
-        border-radius:16px;
+        border-radius:0;
 
     }
 
-    .photo-card:hover{
+    .nav{
 
-        transform:none;
+        width:46px;
 
-        box-shadow:var(--shadow-sm);
+        height:46px;
+
+        font-size:24px;
+
+    }
+
+    .prev{
+
+        left:8px;
 
     }
 
-    .photo-card:hover img{
+    .next{
 
-        transform:none;
+        right:8px;
 
     }
+
+    .close-btn{
+
+        top:10px;
+
+        right:10px;
+
+        width:42px;
+
+        height:42px;
+
+        font-size:24px;
+
+    }
+
+    .caption{
+
+        bottom:15px;
+
+        font-size:13px;
+
+        max-width:95%;
+
+    }
+
+}
+
+/* ==========================
+   ANIMATION
+========================== */
+
+@keyframes viewerFade{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==================================================
+   05. BUTTONS & FLOATING ACTION
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   BACK TO TOP
+========================== */
+
+.top-button{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    width:58px;
+
+    height:58px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #2F7BFF,
+
+    #0A3D9B
+
+    );
+
+    color:white;
+
+    box-shadow:
+
+    0 12px 30px rgba(10,61,155,.35);
+
+}
+
+.top-button.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.top-button:hover{
+
+    transform:translateY(-4px);
+
+    background:var(--primary-light);
+
+}
+
+/* ==========================
+   VIEWER ACTIONS
+========================== */
+
+.viewer-actions{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:80px;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    gap:14px;
+
+    z-index:20;
+
+}
+
+/* ==========================
+   BUTTON STYLE
+========================== */
+
+.viewer-actions button{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    height:46px;
+
+    padding:0 18px;
+
+    border-radius:999px;
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    rgba(47,123,255,.85),
+
+    rgba(10,61,155,.92)
+
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    border:1px solid rgba(255,255,255,.18);
+
+}
+
+.viewer-actions button:hover{
+
+    background:rgba(255,255,255,.28);
+
+    transform:translateY(-2px);
+
+}
+
+.viewer-actions button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================
+   DOWNLOAD
+========================== */
+
+#downloadBtn{
+
+    min-width:120px;
+
+}
+
+/* ==========================
+   SHARE
+========================== */
+
+#shareBtn{
+
+    min-width:100px;
+
+}
+
+/* ==========================
+   LOADING BUTTON
+========================== */
+
+.button-loading{
+
+    pointer-events:none;
+
+    opacity:.6;
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+    .viewer-actions{
+
+        bottom:60px;
+
+        gap:10px;
+
+    }
+
+    .viewer-actions button{
+
+        height:42px;
+
+        padding:0 14px;
+
+        font-size:13px;
+
+    }
+
+    .top-button{
+
+        width:50px;
+
+        height:50px;
+
+        right:16px;
+
+        bottom:16px;
+
+        font-size:20px;
+
+    }
+
+}
+
+/* ==================================================
+   07. ANIMATION
+   SPENSA 98 PHOTO ARCHIVE
+================================================== */
+
+/* ==========================
+   FADE IN
+========================== */
+
+.fade-in{
+
+    animation:fadeIn .45s ease both;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(12px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================
+   ZOOM IN
+========================== */
+
+.zoom-in{
+
+    animation:zoomIn .30s ease both;
+
+}
+
+@keyframes zoomIn{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================
+   PHOTO HOVER
+========================== */
+
+.photo-card{
+
+    will-change:transform;
+
+}
+
+.photo-card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.photo-card:hover img{
+
+    transform:scale(1.04);
+
+}
+
+/* ==========================
+   IMAGE LOADED
+========================== */
+
+.photo-card img{
+
+    opacity:1;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+
+}
+
+.photo-card img.loaded{
+
+    opacity:1;
+
+}
+
+/* ==========================
+   VIEWER IMAGE
+========================== */
+
+#viewerImage{
+
+    animation:viewerOpen .25s ease;
+
+}
+
+@keyframes viewerOpen{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================
+   SPINNER
+========================== */
+
+.spinner{
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================
+   FLOAT BUTTON
+========================== */
+
+.top-button{
+
+    transition:
+        transform .25s,
+        opacity .25s,
+        background .25s;
+
+}
+
+.top-button:hover{
+
+    transform:translateY(-5px);
+
+}
+
+/* ==========================
+   BUTTON EFFECT
+========================== */
+
+button{
+
+    transition:
+        background .25s,
+        color .25s,
+        transform .20s;
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EAF2FF;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:
+
+    linear-gradient(
+
+    180deg,
+
+    #2F7BFF,
+
+    #0A3D9B
+
+    );
+
+    border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#083480;
 
 }
 
@@ -833,14 +1572,34 @@ main{
 
 @media (prefers-reduced-motion:reduce){
 
-    .photo-card,
+    *{
 
-    .photo-card img{
+        animation:none !important;
 
-        transition:none;
+        transition:none !important;
 
-        animation:none;
+        scroll-behavior:auto !important;
 
     }
+
+}
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:url("logo.png") center center no-repeat;
+
+    background-size:650px;
+
+    opacity:.025;
+
+    pointer-events:none;
+
+    z-index:-1;
 
 }
