@@ -936,7 +936,7 @@ main{
    NAVIGATION
 ========================== */
 
-..nav{
+.nav{
 
     background:rgba(255,255,255,.18);
 
@@ -1432,9 +1432,25 @@ main{
 
 }
 
-.photo-card img.loaded{
+.photo-card img{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    cursor:pointer;
+
+    border-radius:18px;
 
     opacity:1;
+
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+
+    background:#ECECEC;
 
 }
 
