@@ -16,7 +16,8 @@ const emptyState = document.getElementById("emptyState");
 const viewer = document.getElementById("viewer");
 const viewerImage = document.getElementById("viewerImage");
 const caption = document.getElementById("caption");
-
+const copyBtn = document.getElementById("copyBtn");
+const shareBtn = document.getElementById("shareBtn");
 const photoCount = document.getElementById("photoCount");
 
 const closeViewer = document.getElementById("closeViewer");
@@ -114,28 +115,41 @@ function bindClick() {
 
     document.querySelectorAll(".photo-card img").forEach(img => {
 
-        img.onclick = function(){
+        const open = (e) => {
 
-            current = Number(this.dataset.index);
+            e.preventDefault();
+            e.stopPropagation();
+
+            current = Number(img.dataset.index);
 
             openViewer();
 
         };
 
+        img.addEventListener("click", open, { passive: false });
+        img.addEventListener("touchend", open, { passive: false });
+
     });
 
 }
+
 /* ==========================================
    OPEN VIEWER
 ========================================== */
 
-function openViewer() {
+function openViewer(){
+
+    const photo = photos[current];
+
+    if(!photo) return;
+
+    viewerImage.src = "";
+
+    viewerImage.src = photo.full;
+
+    caption.textContent = photo.name;
 
     viewer.classList.add("show");
-
-    viewerImage.src = photos[current].full;
-
-    caption.textContent = photos[current].name;
 
     document.body.style.overflow = "hidden";
 
@@ -147,20 +161,17 @@ function openViewer() {
    CLOSE VIEWER
 ========================================== */
 
-function closeLightbox() {
+function closeLightbox(){
 
     viewer.classList.remove("show");
 
+    viewerImage.src = "";
+
     document.body.style.overflow = "";
 
-    setTimeout(()=>{
-
-        viewerImage.src = "";
-
-    },300);
-
 }
-*/ ==========================================
+
+/* ==========================================
    NEXT PHOTO
 ========================================== */
 
