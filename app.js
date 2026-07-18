@@ -114,15 +114,13 @@ function bindClick() {
 
     document.querySelectorAll(".photo-card img").forEach(img => {
 
-        img.addEventListener("click", (e) => {
+        img.onclick = function(){
 
-            e.preventDefault();
-
-            current = Number(img.dataset.index);
+            current = Number(this.dataset.index);
 
             openViewer();
 
-        });
+        };
 
     });
 
@@ -161,7 +159,8 @@ function closeLightbox() {
 
     },300);
 
-} ==========================================
+}
+*/ ==========================================
    NEXT PHOTO
 ========================================== */
 
