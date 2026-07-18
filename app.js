@@ -114,13 +114,19 @@ function bindClick() {
 
     document.querySelectorAll(".photo-card img").forEach(img => {
 
-        img.onclick = () => {
+        const open = (e) => {
+
+            e.preventDefault();
+            e.stopPropagation();
 
             current = Number(img.dataset.index);
 
             openViewer();
 
         };
+
+        img.addEventListener("click", open, { passive: false });
+        img.addEventListener("touchend", open, { passive: false });
 
     });
 
