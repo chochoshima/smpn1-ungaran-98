@@ -1,9 +1,13 @@
 /* ==========================================
-   SPENSA 98 PHOTO ARCHIVE
+   GALERI REUNI SMPN 1 UNGARAN 1998
    app.js
 ========================================== */
 
 const API_URL = "https://spensa-gallery.spensa98smpn1ungaran.workers.dev";
+
+/* ==========================================
+   ELEMENT
+========================================== */
 
 const gallery = document.getElementById("gallery");
 const loading = document.getElementById("loading");
@@ -13,20 +17,19 @@ const viewer = document.getElementById("viewer");
 const viewerImage = document.getElementById("viewerImage");
 const caption = document.getElementById("caption");
 
-const searchInput = document.getElementById("searchInput");
 const photoCount = document.getElementById("photoCount");
 
 const closeViewer = document.getElementById("closeViewer");
 const nextPhoto = document.getElementById("nextPhoto");
 const prevPhoto = document.getElementById("prevPhoto");
 
-const downloadBtn = document.getElementById("downloadBtn");
-const shareBtn = document.getElementById("shareBtn");
-
 const topButton = document.getElementById("topButton");
 
+/* ==========================================
+   DATA
+========================================== */
+
 let photos = [];
-let filtered = [];
 let current = 0;
 
 /* ==========================================
@@ -42,22 +45,20 @@ async function loadGallery() {
         const response = await fetch(API_URL);
 
         if (!response.ok) {
-            throw new Error("HTTP " + response.status);
+            throw new Error("HTTP Error : " + response.status);
         }
 
         photos = await response.json();
 
-        filtered = [...photos];
-
-        renderGallery(filtered);
+        renderGallery();
 
         loading.style.display = "none";
 
-    } catch (err) {
+    } catch (error) {
 
-        console.error(err);
+        console.error(error);
 
-        loading.innerHTML = "<p>❌ Gagal memuat galeri.</p>";
+        loading.innerHTML = "<p>Gagal memuat galeri.</p>";
 
     }
 
@@ -67,13 +68,13 @@ async function loadGallery() {
    RENDER GALLERY
 ========================================== */
 
-function renderGallery(list) {
+function renderGallery() {
 
     gallery.innerHTML = "";
 
-    photoCount.textContent = list.length;
+    photoCount.textContent = photos.length;
 
-    if (!list.length) {
+    if (photos.length === 0) {
 
         emptyState.style.display = "block";
 
@@ -83,7 +84,7 @@ function renderGallery(list) {
 
     emptyState.style.display = "none";
 
-    list.forEach((photo, index) => {
+    photos.forEach((photo, index) => {
 
         const card = document.createElement("div");
 
@@ -94,7 +95,6 @@ function renderGallery(list) {
                 src="${photo.thumb}"
                 alt="${photo.name}"
                 loading="lazy"
-                draggable="false"
                 data-index="${index}">
         `;
 
@@ -102,15 +102,25 @@ function renderGallery(list) {
 
     });
 
+    bindClick();
+
+}
+
+/* ==========================================
+   CLICK PHOTO
+========================================== */
+
+function bindClick() {
+
     document.querySelectorAll(".photo-card img").forEach(img => {
 
-        img.addEventListener("click", () => {
+        img.onclick = () => {
 
             current = Number(img.dataset.index);
 
             openViewer();
 
-        });
+        };
 
     });
 
@@ -122,21 +132,11 @@ function renderGallery(list) {
 
 function openViewer() {
 
-    const photo = filtered[current];
-
-    const preload = new Image();
-
-    preload.onload = () => {
-
-        viewerImage.src = preload.src;
-
-    };
-
-    preload.src = photo.full;
-
-    caption.textContent = photo.name;
-
     viewer.classList.add("show");
+
+    viewerImage.src = photos[current].full;
+
+    caption.textContent = photos[current].name;
 
     document.body.style.overflow = "hidden";
 
@@ -145,7 +145,7 @@ function openViewer() {
 }
 
 /* ==========================================
-   CLOSE
+   CLOSE VIEWER
 ========================================== */
 
 function closeLightbox() {
@@ -157,14 +157,14 @@ function closeLightbox() {
 }
 
 /* ==========================================
-   NEXT
+   NEXT PHOTO
 ========================================== */
 
 function next() {
 
     current++;
 
-    if (current >= filtered.length) {
+    if (current >= photos.length) {
 
         current = 0;
 
@@ -175,7 +175,7 @@ function next() {
 }
 
 /* ==========================================
-   PREVIOUS
+   PREVIOUS PHOTO
 ========================================== */
 
 function prev() {
@@ -184,7 +184,7 @@ function prev() {
 
     if (current < 0) {
 
-        current = filtered.length - 1;
+        current = photos.length - 1;
 
     }
 
@@ -193,85 +193,23 @@ function prev() {
 }
 
 /* ==========================================
-   PRELOAD
+   PRELOAD NEXT IMAGE
 ========================================== */
 
 function preloadNext() {
 
-    if (!filtered.length) return;
+    if (photos.length === 0) return;
 
-    const nextIndex = (current + 1) % filtered.length;
+    const nextIndex = (current + 1) % photos.length;
 
     const img = new Image();
 
-    img.src = filtered[nextIndex].full;
+    img.src = photos[nextIndex].full;
 
 }
 
 /* ==========================================
-   SEARCH
-========================================== */
-
-if (searchInput) {
-
-    searchInput.addEventListener("input", () => {
-
-        const keyword = searchInput.value.toLowerCase();
-
-        filtered = photos.filter(photo =>
-            photo.name.toLowerCase().includes(keyword)
-        );
-
-        renderGallery(filtered);
-
-    });
-
-}
-
-/* ==========================================
-   DOWNLOAD
-========================================== */
-
-if (downloadBtn) {
-
-    downloadBtn.onclick = () => {
-
-        window.open(filtered[current].full, "_blank");
-
-    };
-
-}
-
-/* ==========================================
-   SHARE
-========================================== */
-
-if (shareBtn) {
-
-    shareBtn.onclick = async () => {
-
-        if (!navigator.share) return;
-
-        try {
-
-            await navigator.share({
-
-                title: filtered[current].name,
-
-                text: "SPENSA 98 Photo Archive",
-
-                url: filtered[current].full
-
-            });
-
-        } catch (e) {}
-
-    };
-
-}
-
-/* ==========================================
-   BUTTONS
+   BUTTON
 ========================================== */
 
 closeViewer.onclick = closeLightbox;
@@ -284,7 +222,7 @@ prevPhoto.onclick = prev;
    KEYBOARD
 ========================================== */
 
-document.addEventListener("keydown", e => {
+document.addEventListener("keydown", (e) => {
 
     if (!viewer.classList.contains("show")) return;
 
@@ -310,7 +248,7 @@ document.addEventListener("keydown", e => {
    CLICK OUTSIDE
 ========================================== */
 
-viewer.addEventListener("click", e => {
+viewer.onclick = (e) => {
 
     if (e.target === viewer) {
 
@@ -318,29 +256,33 @@ viewer.addEventListener("click", e => {
 
     }
 
-});
+};
 
 /* ==========================================
-   SWIPE
+   TOUCH SWIPE
 ========================================== */
 
 let startX = 0;
 
-viewer.addEventListener("touchstart", e => {
+viewer.addEventListener("touchstart", (e) => {
 
     startX = e.touches[0].clientX;
 
 });
 
-viewer.addEventListener("touchend", e => {
+viewer.addEventListener("touchend", (e) => {
 
-    const diff = startX - e.changedTouches[0].clientX;
+    const endX = e.changedTouches[0].clientX;
+
+    const diff = startX - endX;
 
     if (diff > 60) {
 
         next();
 
-    } else if (diff < -60) {
+    }
+
+    if (diff < -60) {
 
         prev();
 
@@ -349,7 +291,7 @@ viewer.addEventListener("touchend", e => {
 });
 
 /* ==========================================
-   SCROLL TOP
+   BACK TO TOP
 ========================================== */
 
 window.addEventListener("scroll", () => {
