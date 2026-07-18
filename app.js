@@ -114,24 +114,19 @@ function bindClick() {
 
     document.querySelectorAll(".photo-card img").forEach(img => {
 
-        const open = (e) => {
+        img.addEventListener("click", (e) => {
 
             e.preventDefault();
-            e.stopPropagation();
 
             current = Number(img.dataset.index);
 
             openViewer();
 
-        };
-
-        img.addEventListener("click", open, { passive: false });
-        img.addEventListener("touchend", open, { passive: false });
+        });
 
     });
 
 }
-
 /* ==========================================
    OPEN VIEWER
 ========================================== */
@@ -160,9 +155,13 @@ function closeLightbox() {
 
     document.body.style.overflow = "";
 
-}
+    setTimeout(()=>{
 
-/* ==========================================
+        viewerImage.src = "";
+
+    },300);
+
+} ==========================================
    NEXT PHOTO
 ========================================== */
 
