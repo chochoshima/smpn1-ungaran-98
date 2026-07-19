@@ -938,33 +938,35 @@ main{
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    gap:8px;
+    justify-content:center;
 
-    margin-top:12px;
+    gap:10px;
 
-    flex-wrap:wrap;
+    margin-top:16px;
 
     width:100%;
 
 }
 
 /* ==========================
-   TOOL BUTTON
+   BUTTON
 ========================== */
 
 .tool-btn{
 
-    padding:8px 12px;
+    flex:1;
 
-    font-size:13px;
+    max-width:110px;
+
+    padding:10px 8px;
 
     border-radius:999px;
 
-    min-width:70px;
+    font-size:15px;
+
+    font-weight:600;
 
 }
 
@@ -972,7 +974,7 @@ main{
    MOBILE
 ========================== */
 
-@media (max-width:600px){
+@@media (max-width:600px){
 
     .viewer-toolbar{
 
@@ -982,18 +984,15 @@ main{
 
     .tool-btn{
 
-        flex:1;
+        max-width:none;
 
-        min-width:60px;
-
-        padding:8px 4px;
+        padding:10px 4px;
 
         font-size:12px;
 
     }
 
 }
-
 /* ==========================
    LOADING
 ========================== */
