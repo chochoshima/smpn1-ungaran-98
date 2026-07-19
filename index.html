@@ -72,25 +72,69 @@
     <div class="gallery" id="gallery"></div>
 </main>
 
-<div class="viewer-toolbar">
+<div class="viewer" id="viewer">
 
-    <button id="prevPhoto" class="tool-btn">
-        ❮ Prev
+    <button class="close-btn" id="closeViewer" aria-label="Tutup">
+        ✕
     </button>
 
-    <button id="shareBtn" class="tool-btn">
-        📤 Share
-    </button>
+    <div class="viewer-content">
 
-    <button id="downloadBtn" class="tool-btn">
-        ⬇ Download
-    </button>
+        <img
+            id="viewerImage"
+            src=""
+            alt="Preview Foto"
+            draggable="false">
 
-    <button id="nextPhoto" class="tool-btn">
-        Next ❯
-    </button>
+        <video
+            id="viewerVideo"
+            controls
+            playsinline
+            preload="metadata"
+            style="display:none">
+        </video>
+
+        <div class="caption" id="caption"></div>
+
+        <div class="viewer-toolbar">
+
+            <button
+                id="prevPhoto"
+                class="tool-btn"
+                type="button">
+                ❮ Prev
+            </button>
+
+            <button
+                id="shareBtn"
+                class="tool-btn"
+                type="button">
+                📤 Share
+            </button>
+
+            <button
+                id="downloadBtn"
+                class="tool-btn"
+                type="button">
+                ⬇ Download
+            </button>
+
+            <button
+                id="nextPhoto"
+                class="tool-btn"
+                type="button">
+                Next ❯
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
+
+<button class="top-button" id="topButton" aria-label="Kembali ke atas">
+    ↑
+</button>
 
 <button class="top-button" id="topButton" aria-label="Kembali ke atas">
     ↑
