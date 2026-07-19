@@ -21,8 +21,16 @@ const photoCount = document.getElementById("photoCount");
 const closeViewer = document.getElementById("closeViewer");
 const nextPhoto = document.getElementById("nextPhoto");
 const prevPhoto = document.getElementById("prevPhoto");
-
 const topButton = document.getElementById("topButton");
+console.log({
+    closeViewer,
+    nextPhoto,
+    prevPhoto,
+    topButton,
+    shareBtn,
+    viewerImage,
+    viewerVideo
+});
 
 /* ==========================================
    DATA
