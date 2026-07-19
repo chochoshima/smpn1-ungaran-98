@@ -62,23 +62,27 @@ async function loadGallery() {
     try {
 
         const response = await fetch(API_URL, {
-    headers: {
-        "x-access-code": accessCode
-    }
-});
+            headers: {
+                "x-access-code": accessCode
+            }
+        });
 
-if (response.status === 401) {
+        if (response.status === 401) {
 
-    sessionStorage.removeItem("accessCode");
+            sessionStorage.removeItem("accessCode");
 
-    alert("Kode akses salah!");
+            alert("Kode akses salah!");
 
-    location.reload();
+            location.reload();
 
-    return;
+            return;
+
+        }
 
         if (!response.ok) {
+
             throw new Error("HTTP Error : " + response.status);
+
         }
 
         photos = await response.json();
@@ -156,24 +160,6 @@ function renderGallery() {
     });
 
     bindClick();
-
-}
-
-/* ==========================================
-   CLICK PHOTO
-========================================== */
-
-function openViewer() {
-
-    viewer.classList.add("show");
-
-    viewerImage.src = photos[current].full;
-
-    caption.textContent = photos[current].name;
-
-    document.body.style.overflow = "hidden";
-
-    preloadNext();
 
 }
 
