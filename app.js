@@ -12,14 +12,12 @@ const API_URL = "https://spensa-gallery.spensa98smpn1ungaran.workers.dev";
 const gallery = document.getElementById("gallery");
 const loading = document.getElementById("loading");
 const emptyState = document.getElementById("emptyState");
-
+const viewerVideo = document.getElementById("viewerVideo");
 const viewer = document.getElementById("viewer");
 const viewerImage = document.getElementById("viewerImage");
 const caption = document.getElementById("caption");
-const copyBtn = document.getElementById("copyBtn");
 const shareBtn = document.getElementById("shareBtn");
 const photoCount = document.getElementById("photoCount");
-
 const closeViewer = document.getElementById("closeViewer");
 const nextPhoto = document.getElementById("nextPhoto");
 const prevPhoto = document.getElementById("prevPhoto");
@@ -45,7 +43,8 @@ if (!accessCode) {
 
     if (!accessCode) {
 
-        document.body.innerHTML = "<h2 style='text-align:center;margin-top:80px'>Akses dibatalkan</h2>";
+        document.body.innerHTML =
+        "<h2 style='text-align:center;margin-top:80px'>Akses dibatalkan</h2>";
 
         throw new Error("Akses dibatalkan");
 
@@ -62,9 +61,13 @@ async function loadGallery() {
     try {
 
         const response = await fetch(API_URL, {
+
             headers: {
+
                 "x-access-code": accessCode
+
             }
+
         });
 
         if (response.status === 401) {
@@ -87,6 +90,8 @@ async function loadGallery() {
 
         photos = await response.json();
 
+        current = 0;
+
         renderGallery();
 
         loading.style.display = "none";
@@ -95,7 +100,8 @@ async function loadGallery() {
 
         console.error(error);
 
-        loading.innerHTML = "<p>Gagal memuat galeri.</p>";
+        loading.innerHTML =
+        "<p>Gagal memuat galeri.</p>";
 
     }
 
@@ -148,12 +154,20 @@ function renderGallery() {
         card.className = "photo-card";
 
         card.innerHTML = `
-            <img
-                src="${photo.thumb}"
-                alt="${photo.name}"
-                loading="lazy"
-                data-index="${index}">
-        `;
+<div class="thumb">
+
+    <img
+        src="${photo.thumb}"
+        alt="${photo.name}"
+        loading="lazy"
+        data-index="${index}">
+
+    ${photo.type === "video"
+        ? '<div class="play-icon">▶</div>'
+        : ""}
+
+</div>
+`;
 
         gallery.appendChild(card);
 
@@ -167,17 +181,33 @@ function renderGallery() {
    OPEN VIEWER
 ========================================== */
 
-function openViewer(){
+function openViewer() {
 
-    const photo = photos[current];
+    const item = photos[current];
 
-    if(!photo) return;
+    if (!item) return;
+
+    caption.textContent = item.name;
+
+    // reset
+    viewerImage.style.display = "none";
+    viewerVideo.style.display = "none";
 
     viewerImage.src = "";
+    viewerVideo.pause();
+    viewerVideo.removeAttribute("src");
 
-    viewerImage.src = photo.full;
+    if (item.type === "video") {
 
-    caption.textContent = photo.name;
+        viewerVideo.style.display = "block";
+        viewerVideo.src = item.video;
+
+    } else {
+
+        viewerImage.style.display = "block";
+        viewerImage.src = item.full;
+
+    }
 
     viewer.classList.add("show");
 
@@ -187,15 +217,15 @@ function openViewer(){
 
 }
 
-/* ==========================================
-   CLOSE VIEWER
-========================================== */
-
-function closeLightbox(){
+function closeLightbox() {
 
     viewer.classList.remove("show");
 
-    viewerImage.src = "";
+    viewerVideo.pause();
+
+    viewerVideo.removeAttribute("src");
+
+    viewerVideo.load();
 
     document.body.style.overflow = "";
 
@@ -247,9 +277,13 @@ function preloadNext() {
 
     const nextIndex = (current + 1) % photos.length;
 
-    const img = new Image();
+    if (photos[nextIndex].type === "image") {
 
-    img.src = photos[nextIndex].full;
+        const img = new Image();
+
+        img.src = photos[nextIndex].full;
+
+    }
 
 }
 
