@@ -37,13 +37,45 @@ let current = 0;
    LOAD GALLERY
 ========================================== */
 
+let accessCode = sessionStorage.getItem("accessCode");
+
+if (!accessCode) {
+
+    accessCode = prompt("Masukkan Kode Akses Alumni");
+
+    if (!accessCode) {
+
+        document.body.innerHTML = "<h2 style='text-align:center;margin-top:80px'>Akses dibatalkan</h2>";
+
+        throw new Error("Akses dibatalkan");
+
+    }
+
+    sessionStorage.setItem("accessCode", accessCode);
+
+}
+
 loadGallery();
 
 async function loadGallery() {
 
     try {
 
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL, {
+    headers: {
+        "x-access-code": accessCode
+    }
+});
+
+if (response.status === 401) {
+
+    sessionStorage.removeItem("accessCode");
+
+    alert("Kode akses salah!");
+
+    location.reload();
+
+    return;
 
         if (!response.ok) {
             throw new Error("HTTP Error : " + response.status);
