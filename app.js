@@ -410,29 +410,29 @@ shareBtn.onclick = async () => {
 
     if (!item) return;
 
-    const url = item.type === "video"
-        ? item.video
-        : item.full;
+    try {
 
-    if (navigator.share) {
-
-        try {
+        if (navigator.share) {
 
             await navigator.share({
 
                 title: item.name,
                 text: item.name,
-                url
+                url: item.share
 
             });
 
-        } catch (e) {}
+        } else {
 
-    } else {
+            await navigator.clipboard.writeText(item.share);
 
-        await navigator.clipboard.writeText(url);
+            alert("Link berhasil disalin.");
 
-        alert("Link berhasil disalin.");
+        }
+
+    } catch (err) {
+
+        console.log(err);
 
     }
 
@@ -448,20 +448,6 @@ downloadBtn.onclick = () => {
 
     if (!item) return;
 
-    const a = document.createElement("a");
-
-    a.href = item.type === "video"
-        ? item.video
-        : item.full;
-
-    a.download = item.name;
-
-    a.target = "_blank";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
+    window.open(item.download, "_blank");
 
 };
