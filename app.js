@@ -399,3 +399,69 @@ topButton.onclick = () => {
     });
 
 };
+
+/* ==========================================
+   SHARE
+========================================== */
+
+shareBtn.onclick = async () => {
+
+    const item = photos[current];
+
+    if (!item) return;
+
+    const url = item.type === "video"
+        ? item.video
+        : item.full;
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share({
+
+                title: item.name,
+                text: item.name,
+                url
+
+            });
+
+        } catch (e) {}
+
+    } else {
+
+        await navigator.clipboard.writeText(url);
+
+        alert("Link berhasil disalin.");
+
+    }
+
+};
+
+/* ==========================================
+   DOWNLOAD
+========================================== */
+
+downloadBtn.onclick = () => {
+
+    const item = photos[current];
+
+    if (!item) return;
+
+    const a = document.createElement("a");
+
+    a.href = item.type === "video"
+        ? item.video
+        : item.full;
+
+    a.download = item.name;
+
+    a.target = "_blank";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+};
