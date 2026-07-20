@@ -199,7 +199,7 @@ function openViewer() {
             Silakan tekan tombol <b>⬇ Download</b> untuk menonton video.
         `;
 
-    } else
+    } else {
 
         caption.textContent = item.name;
 
@@ -211,22 +211,33 @@ function openViewer() {
     }
 
     viewer.classList.add("show");
-
     document.body.style.overflow = "hidden";
 
     preloadNext();
 
 }
 
+/* ==========================================
+   CLOSE VIEWER
+========================================== */
+
 function closeLightbox() {
 
-    viewer.classList.remove("show");
+    if (viewer) {
+        viewer.classList.remove("show");
+    }
 
-    viewerVideo.pause();
+    if (viewerImage) {
+        viewerImage.src = "";
+        viewerImage.style.display = "none";
+    }
 
-    viewerVideo.removeAttribute("src");
-
-    viewerVideo.load();
+    if (viewerVideo) {
+        viewerVideo.pause();
+        viewerVideo.removeAttribute("src");
+        viewerVideo.load();
+        viewerVideo.style.display = "none";
+    }
 
     document.body.style.overflow = "";
 
