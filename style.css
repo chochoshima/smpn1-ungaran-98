@@ -253,6 +253,108 @@ ol{
 
 }
 
+/* ==================================================
+   NAVIGATION MENU
+================================================== */
+
+.nav-menu{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    overflow-x:auto;
+
+    white-space:nowrap;
+
+    padding:12px 20px;
+
+    background:#ffffff;
+
+    border-bottom:1px solid var(--border);
+
+    box-shadow:var(--shadow-sm);
+
+    scrollbar-width:none;
+
+}
+
+
+.nav-menu::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+.nav-menu a{
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+    padding:9px 18px;
+
+    border-radius:30px;
+
+    background:#EEF4FF;
+
+    color:var(--primary-dark);
+
+    font-weight:600;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+
+.nav-menu a:hover,
+.nav-menu a.active{
+
+    background:var(--primary);
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* HP */
+
+@media(max-width:768px){
+
+    .nav-menu{
+
+        justify-content:flex-start;
+
+        padding:10px 14px;
+
+    }
+
+
+    .nav-menu a{
+
+        font-size:13px;
+
+        padding:8px 14px;
+
+    }
+
+}
+
 /* ==========================
    BRAND
 ========================== */
