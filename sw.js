@@ -1,4 +1,4 @@
-const CACHE = "spensa98-v1";
+const CACHE = "spensa98-v2";
 
 const FILES = [
     "/",
@@ -12,6 +12,22 @@ self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE).then(cache => cache.addAll(FILES))
     );
+    self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.map(key => {
+                    if (key !== CACHE) {
+                        return caches.delete(key);
+                    }
+                })
+            )
+        )
+    );
+    self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
