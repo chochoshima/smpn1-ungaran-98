@@ -199,7 +199,7 @@ function openViewer() {
             Silakan tekan tombol <b>⬇ Download</b> untuk menonton video.
         `;
 
-    } else {
+    } else
 
         caption.textContent = item.name;
 
