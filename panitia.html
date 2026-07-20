@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SPENSA 98 | Panitia Reuni</title>
+
+    <meta name="description"
+          content="Dokumentasi Panitia Reuni Alumni SMP Negeri 1 Ungaran Angkatan 1998">
+
+    <meta name="theme-color" content="#0b3d91">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SPENSA 98">
+
+    <!-- Icon -->
+    <link rel="icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body data-category="chatGPT">
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <img src="logo.png"
+             alt="Logo SPENSA 98"
+             class="logo">
+
+        <div>
+
+            <h1>SPENSA 98</h1>
+
+            <p>Dokumentasi Panitia Reuni</p>
+
+        </div>
+
+    </div>
+
+    <div class="photo-count">
+
+        <span id="photoCount">0</span>
+
+        <small>Foto</small>
+
+    </div>
+
+</header>
+
+<!-- ==========================================
+     NAVIGASI
+========================================== -->
+
+<nav class="collection-nav">
+
+    <a href="index.html"
+       class="collection-item">
+        🏫<br>Reuni
+    </a>
+
+    <a href="galeri-smp.html"
+       class="collection-item">
+        📚<br>Masa SMP
+    </a>
+
+    <a href="video-smp.html"
+       class="collection-item">
+        🎥<br>Video
+    </a>
+
+    <a href="panitia.html"
+       class="collection-item active">
+        👥<br>Panitia
+    </a>
+
+</nav>
+
+<!-- ==========================================
+     LOADING
+========================================== -->
+
+<div class="loading" id="loading">
+
+    <div class="spinner"></div>
+
+    <p>Memuat galeri...</p>
+
+</div>
+
+<!-- ==========================================
+     EMPTY
+========================================== -->
+
+<div class="empty-state" id="emptyState">
+
+    📷
+
+    <h2>Belum ada foto</h2>
+
+    <p>Dokumentasi panitia akan ditampilkan di sini.</p>
+
+</div>
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main>
+
+    <h2 class="section-title">
+
+        Dokumentasi Panitia
+
+    </h2>
+
+    <div class="gallery"
+         id="gallery"></div>
+
+</main>
+
+<!-- ==========================================
+     VIEWER
+========================================== -->
+
+<div class="viewer"
+     id="viewer">
+
+    <button
+        class="close-btn"
+        id="closeViewer"
+        aria-label="Tutup">
+
+        ✕
+
+    </button>
+
+    <div class="viewer-content">
+
+        <img
+            id="viewerImage"
+            src=""
+            alt="Preview Foto"
+            draggable="false">
+
+        <video
+            id="viewerVideo"
+            controls
+            playsinline
+            preload="metadata"
+            style="display:none">
+        </video>
+
+        <div
+            class="caption"
+            id="caption">
+        </div>
+
+        <div class="viewer-toolbar">
+
+            <button
+                id="prevPhoto"
+                class="tool-btn"
+                type="button">
+
+                ❮ Prev
+
+            </button>
+
+            <button
+                id="shareBtn"
+                class="tool-btn"
+                type="button">
+
+                📤 Share
+
+            </button>
+
+            <button
+                id="downloadBtn"
+                class="tool-btn"
+                type="button">
+
+                ⬇ Download
+
+            </button>
+
+            <button
+                id="nextPhoto"
+                class="tool-btn"
+                type="button">
+
+                Next ❯
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     BACK TO TOP
+========================================== -->
+
+<button
+    class="top-button"
+    id="topButton"
+    aria-label="Kembali ke atas">
+
+    ↑
+
+</button>
+
+<!-- ==========================================
+     FOOTER
+========================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+        <p><strong>SPENSA 98</strong></p>
+
+        <p>Alumni SMP Negeri 1 Ungaran Angkatan 1998</p>
+
+        <p>&copy; 2026</p>
+
+    </div>
+
+</footer>
+
+<!-- ==========================================
+     TEMPLATE
+========================================== -->
+
+<template id="photoTemplate">
+
+    <div class="photo-card">
+
+        <img
+            loading="lazy"
+            draggable="false">
+
+    </div>
+
+</template>
+
+<!-- ==========================================
+     APP
+========================================== -->
+
+<script src="app-panitia.js"></script>
+
+<!-- ==========================================
+     SERVICE WORKER
+========================================== -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("sw.js");
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
