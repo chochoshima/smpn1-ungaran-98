@@ -3,7 +3,10 @@
    app.js
 ========================================== */
 
-const API_URL = "https://spensa-gallery.spensa98smpn1ungaran.workers.dev";
+const category = document.body.dataset.category || "";
+
+const API_URL =
+`https://spensa-gallery.spensa98smpn1ungaran.workers.dev?category=${category}`;
 
 /* ==========================================
    ELEMENT
