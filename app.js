@@ -179,23 +179,34 @@ function openViewer() {
 
     caption.textContent = item.name;
 
-    // reset
-    viewerImage.style.display = "none";
-    viewerVideo.style.display = "none";
+    // Reset viewer
+    if (viewerImage) {
+        viewerImage.style.display = "none";
+        viewerImage.src = "";
+    }
 
-    viewerImage.src = "";
-    viewerVideo.pause();
-    viewerVideo.removeAttribute("src");
+    if (viewerVideo) {
+        viewerVideo.style.display = "none";
+        viewerVideo.pause();
+        viewerVideo.removeAttribute("src");
+        viewerVideo.load();
+    }
 
+    // Tampilkan media
     if (item.type === "video") {
 
-        viewerVideo.style.display = "block";
-        viewerVideo.src = item.video;
+        if (viewerVideo) {
+            viewerVideo.style.display = "block";
+            viewerVideo.src = item.video;
+            viewerVideo.load();
+        }
 
     } else {
 
-        viewerImage.style.display = "block";
-        viewerImage.src = item.full;
+        if (viewerImage) {
+            viewerImage.style.display = "block";
+            viewerImage.src = item.full;
+        }
 
     }
 
