@@ -930,51 +930,67 @@ main{
 
 }
 
-/* ==========================
+/* ===========================
    VIEWER TOOLBAR
-========================== */
+=========================== */
 
 .viewer-toolbar{
 
     display:flex;
-
-    align-items:center;
-
     justify-content:center;
-
-    gap:10px;
-
-    margin-top:16px;
-
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
     width:100%;
+    flex-wrap:nowrap;
 
 }
-
-/* ==========================
-   BUTTON
-========================== */
 
 .tool-btn{
 
     flex:1;
+    min-width:0;
 
-    max-width:110px;
+    height:44px;
 
-    padding:10px 8px;
+    padding:0 12px;
 
     border-radius:999px;
 
-    font-size:15px;
+    background:#ffffff;
+
+    color:#0A3D9B;
 
     font-weight:600;
 
+    font-size:14px;
+
+    white-space:nowrap;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+
+    transition:
+        background .25s,
+        color .25s,
+        transform .2s;
+
 }
 
-/* ==========================
-   MOBILE
-========================== */
+.tool-btn:hover{
 
-@@media (max-width:600px){
+    background:#0A3D9B;
+    color:#fff;
+    transform:translateY(-2px);
+
+}
+
+.tool-btn:active{
+
+    transform:scale(.96);
+
+}
+
+@media (max-width:768px){
 
     .viewer-toolbar{
 
@@ -984,15 +1000,16 @@ main{
 
     .tool-btn{
 
-        max-width:none;
+        height:40px;
 
-        padding:10px 4px;
+        padding:0 6px;
 
-        font-size:12px;
+        font-size:13px;
 
     }
 
 }
+
 /* ==========================
    LOADING
 ========================== */
@@ -1151,26 +1168,6 @@ main{
 }
 
 /* ==========================
-   DOWNLOAD
-========================== */
-
-#downloadBtn{
-
-    min-width:120px;
-
-}
-
-/* ==========================
-   SHARE
-========================== */
-
-#shareBtn{
-
-    min-width:100px;
-
-}
-
-/* ==========================
    LOADING BUTTON
 ========================== */
 
@@ -1179,46 +1176,6 @@ main{
     pointer-events:none;
 
     opacity:.6;
-
-}
-
-/* ==========================
-   MOBILE
-========================== */
-
-@media(max-width:768px){
-
-    .viewer-actions{
-
-        bottom:60px;
-
-        gap:10px;
-
-    }
-
-    .viewer-actions button{
-
-        height:42px;
-
-        padding:0 14px;
-
-        font-size:13px;
-
-    }
-
-    .top-button{
-
-        width:50px;
-
-        height:50px;
-
-        right:16px;
-
-        bottom:16px;
-
-        font-size:20px;
-
-    }
 
 }
 
@@ -1306,6 +1263,134 @@ main{
 .photo-card:hover img{
 
     transform:scale(1.04);
+
+}
+
+/* ==========================================
+   COLLECTION
+========================================== */
+
+.collection-section{
+
+    width:min(1200px,95%);
+    margin:30px auto;
+
+}
+
+.collection-scroll{
+
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+    flex-wrap:wrap;
+    gap:22px;
+
+}
+
+.collection-card{
+
+    width:300px;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border:1px solid #DCE7FF;
+
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+
+    transition:.28s;
+
+}
+
+.collection-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 16px 34px rgba(11,61,145,.22);
+
+}
+
+.collection-card img{
+
+    width:100%;
+
+    height:180px;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+.collection-info{
+
+    padding:16px;
+
+}
+
+.collection-info h3{
+
+    margin:0 0 8px;
+
+    color:#0b3d91;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.collection-info p{
+
+    margin:0;
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width:900px){
+
+    .collection-card{
+
+        width:280px;
+
+    }
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:640px){
+
+    .collection-scroll{
+
+        gap:16px;
+
+    }
+
+    .collection-card{
+
+        width:100%;
+        max-width:380px;
+
+    }
 
 }
 
