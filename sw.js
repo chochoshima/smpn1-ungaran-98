@@ -1,4 +1,4 @@
-const CACHE = "spensa98-v2";
+const CACHE = "spensa98-v3";
 
 const FILES = [
     "/",
