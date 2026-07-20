@@ -193,13 +193,28 @@ function openViewer() {
     }
 
     // Tampilkan media
-    if (item.type === "video") {
+if (item.type === "video") {
 
-        if (viewerVideo) {
-            viewerVideo.style.display = "block";
-            viewerVideo.src = item.video;
-            viewerVideo.load();
-        }
+    caption.innerHTML = `
+        <strong>${item.name}</strong><br>
+        🎥 Preview video tidak tersedia.<br>
+        Silakan tekan tombol <b>⬇ Download</b> untuk menonton video.
+    `;
+
+    if (viewerVideo) {
+        viewerVideo.style.display = "none";
+    }
+
+} else {
+
+    caption.textContent = item.name;
+
+    if (viewerImage) {
+        viewerImage.style.display = "block";
+        viewerImage.src = item.full;
+    }
+
+}
 
     } else {
 
