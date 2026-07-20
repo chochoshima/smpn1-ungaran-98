@@ -112,26 +112,6 @@ async function loadGallery() {
 }
 
 /* ==========================================
-   BIND CLICK
-========================================== */
-
-function bindClick() {
-
-    gallery.querySelectorAll("img").forEach(img => {
-
-        img.onclick = () => {
-
-            current = Number(img.dataset.index);
-
-            openViewer();
-
-        };
-
-    });
-
-}
-
-/* ==========================================
    RENDER GALLERY
 ========================================== */
 
@@ -157,18 +137,26 @@ function renderGallery() {
 
         card.className = "photo-card";
 
+        // Klik seluruh card
+        card.onclick = () => {
+
+            current = index;
+
+            openViewer();
+
+        };
+
         card.innerHTML = `
 <div class="thumb">
 
     <img
         src="${photo.thumb}"
         alt="${photo.name}"
-        loading="lazy"
-        data-index="${index}">
+        loading="lazy">
 
     ${photo.type === "video"
-        ? '<div class="play-icon">▶</div>'
-        : ""}
+            ? '<div class="play-icon">▶</div>'
+            : ""}
 
 </div>
 `;
@@ -176,8 +164,6 @@ function renderGallery() {
         gallery.appendChild(card);
 
     });
-
-    bindClick();
 
 }
 
