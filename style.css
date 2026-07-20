@@ -253,6 +253,43 @@ ol{
 
 }
 
+/* Media Query ini hanya akan berjalan di layar HP/Tablet (<= 768px) */
+@media (max-width: 768px) {
+    .header {
+        min-height: 70px; /* Mengecilkan tinggi header di HP */
+        padding: 10px 16px;
+        gap: 12px;
+    }
+
+    .logo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .brand h1 {
+        font-size: 1.2rem;
+    }
+
+    .brand p {
+        font-size: 0.8rem;
+    }
+
+    .photo-count {
+        min-width: 60px;
+        padding: 6px 10px;
+        border-radius: 14px;
+    }
+
+    .photo-count span {
+        font-size: 0.9rem;
+    }
+
+    .photo-count small {
+        font-size: 0.7rem;
+    }
+}
+
+
 /* ==================================================
    NAVIGATION MENU
 ================================================== */
